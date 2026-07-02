@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dribble</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/Logo/CyberLogo.png" alt="CyberLogo">
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active">Solutions</a>
+                <a href="#" class="nav-link">Portfolio</a>
+                <a href="#" class="nav-link">Process</a>
+            </div>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <div class="mobile-nav-links">
+            <a href="#" class="nav-link active">Solutions</a>
+            <a href="#" class="nav-link">Portfolio</a>
+            <a href="#" class="nav-link">Process</a>
+        </div>
+    </div>
+
+    <!--------  HERO ------------>
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="hero-word"> Turn Your</span>
+                    <span class="hero-word"><span class="red-text"> App </span></span>
+                    <span class="hero-word"> Idea </span><br>
+                    <span class="hero-word"> Into Reality</span>
+                </h1>
+
+                <div class="hero-cards-wrapper">
+                    <div class="cards">
+                        <div class="card1 ph-card"><img src="assets/Images/Hero/flock.jpg" alt="Card 1"></div>
+                        <div class="card2 ph-card"><img src="assets/Images/Hero/SafeGrow.jpg" alt="Card 2"></div>
+                        <div class="card3 ph-card"><img src="assets/Images/Hero/Coffee.jpg" alt="Card 3"></div>
+                        <div class="card4 ph-card"><img src="assets/Images/Hero/ugive.jpg" alt="Card 4"></div>
+                        <div class="card5 ph-card"><img src="assets/Images/Hero/Browns.jpg" alt="Card 5"></div>
+                        <div class="card6 ph-card"><img src="assets/Images/Hero/OnCoffee.png" alt="Card 6"></div>
+                        <div class="card7 ph-card"><img src="assets/Images/Hero/Splash.jpg" alt="Card 7"></div>
+                    </div>
+                </div>
+
+                <p class="hero-para"> Creating high-quality mobile applications that blend aesthetic design with
+                    powerful technology,<br> seamless functionality, and exceptional user experiences. </p>
+
+                <div class="hero-btn-wrapper">
+                    <button class="hero-btn"
+                        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/cyberbells/new-meeting?hide_gdpr_banner=1&month=2026-07'});return false;">Book
+                        Your Strategy Session</button>
+                    <button class="readmore-btn" id="openQuoteModalBtn">Request Free Quote</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!------- SECTION 2  --------->
+    <section class="diagonal-card">
+        <div class="diagonal-card-container">
+            <div class="dc-left">
+                <h2 class="diagonal-title">
+                    <span class="diagonal-word"> Imagine. </span>
+                    <span class="diagonal-word"> Build.</span><br>
+                    <span class="diagonal-word"><span class="red-text">Launch.</span>
+                        <span class="diagonal-word"> Your</span>
+                        <span class="diagonal-word"> Next</span></span><br>
+                    <span class="diagonal-word">Mobile App.</span>
+
+                </h2>
+
+                <p class="diagonal-para">
+                    <span class="diagonal-word">From idea to launch in as little as 90 days.</span><br>
+                    <span class="diagonal-word"> We design, develop, test, and publish </span><br>
+                    <span class="diagonal-word"> your app on the App Store and Google Play</span><br>
+                    <span class="diagonal-word">while keeping you involved every step of the way.</span>
+                </p>
+
+                <div class="diagonal-btn-wrapper">
+                    <button class="diagonal-join-btn">Join for $9.99/m</button>
+                    <button class="diagonal-readmore-btn">Read more</button>
+                </div>
+            </div>
+
+            <div class="dc-right">
+                <div class="dc-cards-wrapper">
+                    <div class="dc-card dcc1" style="opacity: 0;"><img src="assets/art1.jpg" alt="Card 1"></div>
+                    <div class="dc-card dcc2" style="opacity: 0;"><img src="assets/art2.jpg" alt="Card 2"></div>
+                    <div class="dc-card dcc3" style="opacity: 0;"><img src="assets/art3.jpg" alt="Card 3"></div>
+                    <div class="dc-card dcc4" style="opacity: 0;"><img src="assets/art4.jpg" alt="Card 4"></div>
+                    <div class="dc-card dcc5" style="opacity: 0;"><img src="assets/art5.jpg" alt="Card 5"></div>
+
+                    <div class="dc-chat-bubble dc-bubble-a">Design</div>
+                    <div class="dc-chat-bubble dc-bubble-b">Development</div>
+                    <div class="dc-chat-bubble dc-bubble-c">Launch</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!---------- Section 3 Gateway ------------->
+    <section class="gateway">
+        <div class="gateway-container">
+            <div class="gateway-header">
+                <div class="gateway-text">
+                    <div class="gateway-heading">
+                        <span class="gateway-word">INDUSTRIES</span> <span class="gateway-word">WE</span> <span
+                            class="gateway-word">SERVE</span>
+                    </div>
+                    <div class="gateway-title">
+                        <span class="gateway-word">Mobile Apps</span> <span class="gateway-word">for</span><br>
+                        <span class="gateway-word">Every</span> <span class="gateway-word">Industry.</span>
+                    </div>
+                </div>
+                <div class="gateway-author">
+                    <div class="gateway-author-bubble"><span class="gateway-word">@Swipe</span></div>
+                </div>
+            </div>
+
+            <div class="gateway-img-wrapper">
+                <div class="gateway-carousel">
+                    <img class="carousel-slide active" src="assets/Images/Banner images/Fintech.png" alt="Fintech">
+                    <img class="carousel-slide" src="assets/Images/Banner images/Logistics.png" alt="Logistics">
+                    <img class="carousel-slide" src="assets/Images/Banner images/Ecommerce.png" alt="Ecommerce">
+                    <img class="carousel-slide" src="assets/Images/Banner images/Management.png" alt="ManagementSystem">
+                    <img class="carousel-slide" src="assets/Images/Banner images/Healthcare (2).png" alt="Healthcare">
+
+                </div>
+
+                <div class="gateway-bottom-right">
+                    <button class="arrow-btn prev-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="arrow-btn next-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!----------- Section 4 Marquee Section --------------->
+    <section class="marquee">
+        <div class="marquee-container">
+            <div class="marquee-header">
+                <div class="marquee-text">
+                    <h2 class="marquee-title">
+                        <span class="marquee-word">One App.</span><br>
+                        <span class="marquee-word">
+                            <span class="red-text">Every Platform</span></span>
+
+                    </h2>
+                    <p class="marquee-para">
+                        From smartphones to tablets, wearables, and the web, we build apps that deliver a seamless
+                        experience across every screen.
+
+                    </p>
+                </div>
+            </div>
+
+            <div class="marquee-logos-wrapper">
+                <div class="marquee-track">
+                    <div class="logo-item">IOS</div>
+                    <div class="logo-item">ANDROID</div>
+                    <div class="logo-item">TABLETS</div>
+                    <div class="logo-item">FOLDABLES</div>
+                    <div class="logo-item">CROSS-PLATFORM</div>
+                    <div class="logo-item">TV APPS</div>
+
+                    <div class="logo-item">IOS</div>
+                    <div class="logo-item">ANDROID</div>
+                    <div class="logo-item">TABLETS</div>
+                    <div class="logo-item">FOLDABLES</div>
+                    <div class="logo-item">CROSS-PLATFORM</div>
+                    <div class="logo-item">TV APPS</div>
+
+                    <div class="logo-item">IOS</div>
+                    <div class="logo-item">ANDROID</div>
+                    <div class="logo-item">TABLETS</div>
+                    <div class="logo-item">FOLDABLES</div>
+                    <div class="logo-item">CROSS-PLATFORM</div>
+                    <div class="logo-item">TV APPS</div>
+                </div>
+                <!-- Fading edges -->
+                <div class="fade-left"></div>
+                <div class="fade-right"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-------- Section 5 MarketPlace Place -------->
+    <div class="marketplace">
+        <svg viewBox="0 0 0 0" fill="none" style="position: absolute; width: 0; height: 0;">
+            <defs>
+                <filter id="water-filter">
+                    <feTurbulence id="turbulence-filter" type="fractalNoise" baseFrequency=".03" numOctaves="1"
+                        result="noise" />
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="B"
+                        yChannelSelector="G" />
+                </filter>
+                <animate id="anim1" xlink:href="#turbulence-filter" attributeName="baseFrequency" from=".03" to=".033"
+                    dur="3s" begin="0s; anim2.end" fill="freeze" />
+                <animate id="anim2" xlink:href="#turbulence-filter" attributeName="baseFrequency" from=".033" to=".03"
+                    dur="3s" begin="anim1.end" fill="freeze" />
+            </defs>
+        </svg>
+        <div class="marketplace-bg"></div>
+
+        <div class="marketplace-container" style="position: relative; min-height: 520px;">
+
+            <div class="marketplace-title"
+                style="position: relative; z-index: 10; padding-bottom: 0; margin-bottom: 0; pointer-events: none;">
+                <div class="mp-text-left">
+                    Designed for people. Built for businesses. Engineered to grow.
+                    Every screen,every interaction, and every feature is crafted
+                    to deliver an experience your users will remember.
+                </div>
+                <div class="mp-text-right">
+                    Designed for people. Built for businesses. Engineered to grow.
+                    Every screen, every interaction, and every feature is crafted
+                    to deliver an experience your users will remember.
+                </div>
+            </div>
+
+            <div id="particle-wave-container"></div>
+        </div>
+    </div>
+    <!------- Section 7 Wavy Cards ------->
+    <section class="wavy-cards">
+        <div class="wavy-cards-container">
+            <div class="wavy-cards-track top-track">
+                <!-- Top -->
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm angels"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
+
+
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm angels"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
+
+
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm angels"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
+
+            </div>
+
+            <div class="wavy-cards-content">
+                <div class="wavy-icon-center">
+                    <div class="center-icon"></div>
+                </div>
+                <h2 class="wavy-cards-title">
+                    <span class="wavy-cards-word"> Trusted by <span class="red-text">Businesses</span>
+                        <br>
+                        <span class="wavy-cards-word">That believe in Innovation.</span>
+
+                </h2>
+            </div>
+
+            <div class="wavy-cards-track bottom-track">
+                <!-- First set -->
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm_angels"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
+
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm_angels"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
+
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm_angels"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
+
+            </div>
+        </div>
+    </section>
+
+    <!----- Section 8 Story Telling  --------->
+    <section class="storytelling">
+        <div class="storytelling-container">
+            <div class="storytelling-header">
+                <span class="storytelling-header-word">STORY</span>
+                <span class="storytelling-header-word"><span class="text-blue">TELLING</span></span>
+            </div>
+
+            <h2 class="storytelling-title">
+                <span class="storytelling-word">Ideas we</span><span class="storytelling-word"> turned
+                    into</span><br>
+                <span class="storytelling-word"> Mobile </span><span class="storytelling-word">Experiences</span>
+            </h2>
+
+            <div class="story-cards">
+                <!-- Left Card -->
+                <div class="story-card card-white">
+                    <div class="card-top-bar">
+                        <div class="play-btn">
+                            <span class="play-icon">▶</span>
+                        </div>
+                        <div class="author-bubble author-blue">@Featured</div>
+                    </div>
+                    <div class="card-visual-placeholder">
+                        <img src="assets/Images/Talkbrush.png" alt="Talkbrush">
+                    </div>
+                    <div class="card-info">
+                        <h3>Talk Brush</h3>
+                        <p>TalkBrush transforms live conversations by letting every listener hear the speaker
+                            in a natural English accent they're comfortable with. From global meetings to live
+                            events, it removes accent barriers so every conversation feels familiar, effortless,
+                            and truly connected.</p>
+                        <button class="card-pill-btn">View Case Study </button>
+                    </div>
+                </div>
+
+                <!-- Right Card -->
+                <div class="story-card card-mixed">
+                    <div class="card-blue-placeholder">
+                        <img src="assets/Images/Ugive.png" alt="Ugive">
+                    </div>
+                    <div class="card-info bg-white">
+                        <h3>Ugive</h3>
+                        <p>UGive is a student-first platform designed to make campus life more connected and
+                            engaging.Students can connect with peers, share appreciation through digital cards, and
+                            participate in rewarding activities, all within one secure and intuitive platform. </p>
+                        <button class="card-pill-btn">Read more</button>
+                    </div>
+                </div>
+
+                <!-- Left Card 2 -->
+                <div class="story-card card-white">
+                    <div class="card-top-bar">
+                        <div class="play-btn">
+                            <span class="play-icon">▶</span>
+                        </div>
+                        <div class="author-bubble author-blue">@Live</div>
+                    </div>
+                    <div class="card-visual-placeholder">
+                        <img src="assets/Images/Flock.png" alt="Flock">
+                    </div>
+                    <div class="card-info">
+                        <h3>Flock</h3>
+                        <p>Flock transforms everyday visits into meaningful experiences where businesses create
+                            location-based check-ins, personalized rewards, and exclusive offers. At the same time,
+                            customers enjoy a simple, engaging way to earn points, redeem coupons, and get rewarded for
+                            every visit
+                        </p>
+                        <button class="card-pill-btn">Discover more</button>
+                    </div>
+                </div>
+
+                <!-- Right Card 2 -->
+                <div class="story-card card-mixed">
+                    <div class="card-blue-placeholder">
+                        <img src="assets/Images/Society.png" alt="Society">
+                    </div>
+                    <div class="card-info bg-white">
+                        <h3>Smart Society</h3>
+                        <p>SocietySmartHub simplifies the everyday experience of apartment communities
+                            From notices and maintenance payments to complaints and community updates, it simplifies
+                            everyday operations while creating a more connected, transparent, and well-managed living
+                            experience.
+                        </p>
+                        <button class="card-pill-btn">View Case Study</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-------- Section 9 Market  ---------->
+    <section class="market">
+        <div class="market-container">
+
+            <div class="market-left">
+                <div class="market-header">
+                    POWERED BY <span class="text-purple">AI</span>
+                </div>
+
+                <h2 class="market-title">
+                    <span class="market-text">Intelligence, <span class="text-purple">Built into</span></span><br>
+                    <span class="market-text"><span class="text-purple">Every</span></span>
+                    <span class="market-text">Experience.</span>
+                </h2>
+
+                <p class="market-para">
+                    <span class="market-text">Everything your users expect from modern AI,</span><br>
+                    <span class="market-text">all in one seamless mobile experience,</span><br>
+                    <span class="market-text">with endless possibilities.</span>
+                </p>
+            </div>
+
+            <div class="market-right">
+
+                <div class="market-cards">
+
+                    <div class="mp-card">
+                        <div class="mp-img-placeholder">
+                            <img src="assets/Images/Chatbot.png" alt="">
+                        </div>
+                        <h4>AI ChatBot</h4>
+                    </div>
+
+                    <div class="mp-card">
+                        <div class="mp-img-placeholder">
+                            <img src="assets/Images/SmartRecommendation.png" alt="">
+                        </div>
+                        <h4>Smart Recommendation</h4>
+                    </div>
+
+                    <div class="mp-card">
+                        <div class="mp-img-placeholder">
+                            <img src="assets/Images/RealTimeTranslation.png" alt="">
+                        </div>
+                        <h4>Real-Time Translation</h4>
+                    </div>
+
+                    <div class="mp-card">
+                        <div class="mp-img-placeholder">
+                            <img src="assets/Images/Automation.png" alt="">
+                        </div>
+                        <h4>Automation</h4>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!----- Section 10 Image Shrink Section -------->
+    <section class="shrink-section">
+        <div class="shrink-section-container">
+
+
+            <div class="animation-wrapper">
+                <!-- Col 1 -->
+                <div class="card shrink-c1"><img src="assets/Images/Shrink/bubbles_card.png" alt="1"></div>
+                <div class="card shrink-c2"><img src="assets/Images/Shrink/bhedu_card.png" alt="2"></div>
+
+                <!-- Col 2 -->
+                <div class="card shrink-c3"><img src="assets/Images/Shrink/home_v2_card.png" alt="3"></div>
+                <div class="card shrink-c4"><img src="assets/Images/Shrink/loading_quote.png" alt="4"></div>
+                <div class="card shrink-c5"><img src="assets/Images/Shrink/community_card.png" alt="5"></div>
+
+                <!-- Col 3 (Center column) -->
+                <div class="card shrink-c6"><img src="assets/Images/Shrink/calming playlist.png" alt="6"></div>
+                <div class="card shrink-c7"><img src="assets/Images/Shrink/home_full_card.png" alt="7"></div>
+
+                <!-- Col 4 -->
+                <div class="card shrink-c8"><img src="assets/Images/Shrink/journal_v2_card.png" alt="8"></div>
+                <div class="card shrink-c9"><img src="assets/Images/Shrink/care_tools_v2_card.png" alt="9"></div>
+                <div class="card shrink-c10"><img src="assets/Images/Shrink/loading_quote.png" alt="10"></div>
+
+                <!-- Col 5 -->
+                <div class="card shrink-c11"><img src="assets/Images/Shrink/bellie_card.png" alt="11"></div>
+                <div class="card shrink-c12"><img src="assets/Images/Shrink/pip_card.png" alt="12"></div>
+
+
+                <div class="image"><img src="assets/Images/Shrink/Splash.png" alt="Splash"></div>
+            </div>
+        </div>
+    </section>
+
+    <!------ Section 12 Bento Grid ------>
+    <section class="grid">
+        <div class="grid-container">
+            <div class="large-grid-top">
+                <div class="lgt-marquee">
+                    <span class="lgt-word">ide</span>
+                    <div class="lgt-sq "></div>
+                    <div class="lgt-sq "></div>
+                    <div class="lgt-sq "></div>
+                    <span class="lgt-word">Built With the Best</span>
+                    <div class="lgt-img-ph"></div>
+                    <span class="lgt-word">For the Best Results </span>
+                </div>
+
+                <div class="lgt-scattered-icons">
+                    <!-- Left group -->
+                    <div class="lgt-circle c1"><img src="assets/Logo/Flutter.svg" alt="Flutter"></div>
+                    <div class="lgt-circle c2"><img src="assets/Logo/React-Native.svg" alt="React Native"></div>
+                    <div class="lgt-circle c3"><img src="assets/Logo/Figma.svg" alt="Figma"></div>
+                    <div class="lgt-circle c4"><img src="assets/Logo/Kotlin.svg" alt="Kotlin"></div>
+                    <div class="lgt-circle c5"><img src="assets/Logo/Next.js.svg" alt="Next.js"></div>
+                    <div class="lgt-circle c6"><img src="assets/Logo/Php.png" alt="PHP"></div>
+                    <!-- Right group -->
+                    <div class="lgt-circle c7"><img src="assets/Logo/Postman.png" alt="Postman"></div>
+                    <div class="lgt-circle c8"><img src="assets/Logo/Python.svg" alt="Python"></div>
+                    <div class="lgt-circle c9"><img src="assets/Logo/node.js.svg" alt="Node.js"></div>
+                    <div class="lgt-circle c10"><img src="assets/Logo/typescript.svg" alt="TypeScript">
+                    </div>
+                    <div class="lgt-circle c11"><img src="assets/Logo/Firebase.png" alt="Firebase">
+                    </div>
+                    <div class="lgt-circle c12"><img src="assets/Logo/mysql.png" alt="mysql"></div>
+                    <div class="lgt-circle c13"><img src="assets/Logo/Mongodb.png" alt="Mongodb"></div>
+
+
+                </div>
+            </div>
+
+            <div class="grid-bottom">
+                <div class="grid-left">
+                    <div class="gl-bg-placeholder"></div>
+
+                    <div class="grid-content">
+
+                        <div class="g-icon gl-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+
+                        <div class="grid-left-title">
+                            Get In Touch
+                        </div>
+
+
+                        <form class="contact-form">
+
+                            <div class="form-group">
+                                <label>First Name <span>*</span></label>
+                                <input type="text" placeholder="First Name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Last Name <span>*</span></label>
+                                <input type="text" placeholder="Last Name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email <span>*</span></label>
+                                <input type="email" placeholder="Email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Write to Us <span>*</span></label>
+                                <textarea rows="5" placeholder="" required></textarea>
+                            </div>
+
+                            <button type="submit" class="Meet">
+                                Send Message
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="grid-right">
+                    <div class="gr-bg-placeholder-right"></div>
+                    <div class="grid-content">
+                        <div class="g-icon gr-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="9" y1="3" x2="9" y2="21"></line>
+                            </svg>
+                        </div>
+                        <div class="grid-right-title">
+                            Book a free <br>consultation
+                        </div>
+                        <div class="grid-right-para">
+                            Ready to bring your App idea to life?<br>
+                            Book a free consultation with our experts.
+                        </div>
+                        <button class="Archives"
+                            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/cyberbells/new-meeting?hide_gdpr_banner=1&month=2026-07'});return false;">
+                            Book a Strategy Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!---- Footer --->
+    <section class="Footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                © 2026 Cyberbells. All rights reserved.
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Modal -->
+    <div id="quoteModal" class="quote-modal">
+        <div class="quote-modal-content">
+            <span class="quote-close-btn">&times;</span>
+            <h2 class="quote-modal-title">Request a Free Quote</h2>
+            <p class="quote-modal-subtitle">Tell us about your project and we'll get back to you shortly.</p>
+
+            <form id="quoteForm" class="quote-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="John">
+                        <span class="error-msg" id="err-firstName">First name is required</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Doe">
+                        <span class="error-msg" id="err-lastName">Last name is required</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com">
+                    <span class="error-msg" id="err-email">Valid email is required</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4"
+                        placeholder="Tell us about your app idea..."></textarea>
+                    <span class="error-msg" id="err-message">Message is required</span>
+                </div>
+
+                <button type="submit" class="quote-submit-btn" id="quoteSubmitBtn">
+                    <span class="btn-text">Submit Request</span>
+                    <span class="btn-loader" style="display: none;">Wait...</span>
+                </button>
+
+                <div class="success-msg" id="quoteSuccessMsg" style="display: none;">
+                    Your request has been sent successfully! We'll be in touch soon.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="index.js" defer></script>
+</body>
+
+</html>
