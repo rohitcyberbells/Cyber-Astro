@@ -957,11 +957,12 @@ ScrollTrigger.create({
   }
 });
 
-function initFolderPhysics() {
+async function initFolderPhysics() {
   const container = document.querySelector(".folder-icons-cluster");
   const circles = document.querySelectorAll(".cluster-icon");
 
-  if (!container || circles.length === 0 || !window.Matter) return;
+  if (!container || circles.length === 0) return;
+  const Matter = await import("matter-js");
 
   const width = container.clientWidth;
   const height = container.clientHeight;
