@@ -1198,8 +1198,7 @@ if (quoteForm) {
     e.preventDefault();
 
     // Get values
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
+    const name = document.getElementById('Name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
 
@@ -1209,8 +1208,7 @@ if (quoteForm) {
 
     // Validate
     const errors = {
-      firstName: !firstName.trim(),
-      lastName: !lastName.trim(),
+      Name: !name.trim(),
       email: !email.trim() || !/\S+@\S+\.\S+/.test(email),
       message: !message.trim()
     };
@@ -1238,8 +1236,9 @@ if (quoteForm) {
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          firstName: firstName,
-          lastName: lastName,
+          Name: name,
+          name: name,
+          firstName: name, // Fallback in case template wasn't updated
           email: email,
           message: message,
         }
