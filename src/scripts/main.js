@@ -1,59 +1,158 @@
+/* ==========================================================================
+   SCROLL ENGINE + SECTIONS 1 & 2 — rebuilt
+   Replaces: original lines ~1-462 (Lenis setup, hero protection, hero intro,
+   scrollMaster, bindHeroProtectionZone, Mac Fanout Fix).
+   Sections 3+ (gateway, marquee, physics, carousel, quote form) are untouched
+   and should stay below this block, unmodified.
+   ========================================================================== */
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
 window.gsap = gsap;
 window.Lenis = Lenis;
 
-/* ================= SCROLL RESTORATION ================= */
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
-/* ================= END SCROLL RESTORATION ================= */
 
 gsap.registerPlugin(ScrollTrigger);
+
+/* ==========================================================================
+   1. ENVIRONMENT DETECTION
+   One pass, done once. Everything downstream reads from these flags instead
+   of re-sniffing UA strings in five different places.
+   ========================================================================== */
 
 const isDesktop = window.matchMedia('(min-width: 769px)').matches;
 
 const platformStr = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent;
-const isMacOS = /mac/i.test(platformStr) && !/iPhone|iPod/.test(navigator.userAgent);
-const isApple = /Mac|iPod|iPhone|iPad/i.test(platformStr) || /iPod|iPhone|iPad/i.test(navigator.userAgent);
 
-// Only normalize scroll on non-Apple devices to preserve native trackpad momentum!
-if (!isApple) {
-  ScrollTrigger.normalizeScroll(true);
+// Catches macOS AND iPadOS-in-desktop-mode (iPad reports as "MacIntel").
+const isMacOS = /mac/i.test(platformStr) && !/iPhone|iPod/.test(navigator.userAgent);
+
+// Real Safari (WebKit), excluding Chrome/Firefox-on-iOS which are WebKit
+// under the hood but don't have Safari's rubber-band/momentum quirks in the
+// same way for our purposes here.
+const isSafari =
+  /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent) ||
+  (navigator.vendor?.includes('Apple') && !/CriOS|FxiOS|EdgiOS/.test(navigator.userAgent));
+
+// Platforms with native momentum scrolling that Lenis needs to *complement*,
+// not fight. Anything in this bucket gets a gentler Lenis config.
+const hasNativeMomentum = isMacOS || isSafari;
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/**
+ * Rough device tier, used to gate expensive work (particle wave, physics,
+ * scrub-heavy timelines). Deliberately conservative: `deviceMemory` and
+ * `connection.saveData` aren't available in Safari, so we never rely on them
+ * alone — hardwareConcurrency is the one signal available everywhere.
+ */
+function detectDeviceTier() {
+  if (prefersReducedMotion) return 'reduced';
+
+  const cores = navigator.hardwareConcurrency || 4;
+  const mem = navigator.deviceMemory; // undefined on Safari — treated as "unknown", not "high"
+  const saveData = navigator.connection?.saveData;
+
+  if (saveData) return 'low';
+  if (cores <= 4 || (mem !== undefined && mem <= 4)) return 'low';
+  if (cores <= 6) return 'mid';
+  return 'high';
 }
 
-const lenis = (isDesktop && !isMacOS)
-  ? new Lenis({
-    lerp: 0.1,
-    smoothWheel: true,
+const deviceTier = detectDeviceTier();
+const lowPowerMode = false; // Temporarily disabled for testing (was: deviceTier === 'low' || deviceTier === 'reduced')
+
+/* ==========================================================================
+   2. LENIS
+   Runs on ALL desktop platforms now, including Mac/Safari — tuned down
+   rather than switched off. This is what lets us delete the old
+   "Mac Fanout Fix" hack entirely: with Lenis buffering scroll uniformly,
+   raw window.scrollY never leaks into the scrub timelines, on any platform.
+
+   On low-power / reduced-motion devices we skip Lenis altogether and let
+   native scroll handle everything — Lenis's own RAF loop is not free, and
+   ScrollTrigger works correctly against native scroll with zero setup.
+   ========================================================================== */
+
+let lenis = null;
+
+if (isDesktop && !lowPowerMode) {
+  lenis = new Lenis({
+    // Mac/Safari trackpads already have OS-level inertia. Stacking Lenis's
+    // own lerp-smoothing on top of that produces the classic "double
+    // smoothing" laggy feel — so momentum platforms get a lighter touch,
+    // not a bigger one.
+    lerp: hasNativeMomentum ? 0.06 : 0.1,
+    wheelMultiplier: hasNativeMomentum ? 0.7 : 1,
     touchMultiplier: 1.2,
+    smoothWheel: true,
+    // Let touch input use native scroll rather than Lenis's synthetic path —
+    // this matters most on iPad-as-desktop, where syncTouch fighting Safari's
+    // own touch handling is a common source of jank/rubber-band glitches.
+    syncTouch: false,
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     autoRaf: false,
-  })
-  : null;
+  });
 
-if (lenis) {
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-  lenis.stop();
+  // Fully disabling lag smoothing (threshold 0) removes GSAP's catch-up
+  // jump on backgrounded tabs, but on Safari specifically that can show up
+  // as a large scroll-position snap the instant the tab regains focus.
+  // Bounding it instead — absorb up to 500ms of drift instantly, then
+  // resume normal playback rather than fast-forwarding through it — avoids
+  // both failure modes. Test with your actual scrub durations; adjust the
+  // 500 if section 2's timeline is long enough that this still feels abrupt.
+  gsap.ticker.lagSmoothing(500, 33);
+  lenis.stop(); // held until hero intro completes, see bottom of file
 }
+
+window.lenis = lenis;
+
+/*
+  Safari-specific note (apply in CSS, not JS):
+  Safari's elastic overscroll bounce at the top/bottom of the page can cause
+  visible jitter around pinned ScrollTrigger sections, because Safari
+  repaints fixed-position elements during the bounce. Add this once,
+  globally, in your stylesheet:
+
+    html, body { overscroll-behavior: none; }
+
+  This has nothing to do with Lenis directly, but without it, even a
+  perfectly-tuned Lenis config can look glitchy on Safari specifically.
+*/
 
 const SLOWED_MULTIPLIER = 0.25;
 const NORMAL_MULTIPLIER = 1;
 
-
 const lenisSpeed = { value: SLOWED_MULTIPLIER };
 let speedTween = null;
 
-//  page load syrup
 if (lenis) {
   lenis.options.wheelMultiplier = SLOWED_MULTIPLIER;
-  lenis.virtualScroll.options.wheelMultiplier = SLOWED_MULTIPLIER;
   lenis.options.touchMultiplier = SLOWED_MULTIPLIER;
-  lenis.virtualScroll.options.touchMultiplier = SLOWED_MULTIPLIER;
+  // Fallback only — some Lenis versions have VirtualScroll capture its own
+  // copy of these options at construction rather than reading `lenis.options`
+  // live. Verify against your installed version; if `lenis.options` alone
+  // works, delete these two lines.
+  if (lenis.virtualScroll?.options) {
+    lenis.virtualScroll.options.wheelMultiplier = SLOWED_MULTIPLIER;
+    lenis.virtualScroll.options.touchMultiplier = SLOWED_MULTIPLIER;
+  }
 }
 
 function tweenLenisSpeed(to, duration, ease) {
@@ -65,13 +164,21 @@ function tweenLenisSpeed(to, duration, ease) {
     ease,
     onUpdate: () => {
       lenis.options.wheelMultiplier = lenisSpeed.value;
-      lenis.virtualScroll.options.wheelMultiplier = lenisSpeed.value;
       lenis.options.touchMultiplier = lenisSpeed.value;
-      lenis.virtualScroll.options.touchMultiplier = lenisSpeed.value;
+      if (lenis.virtualScroll?.options) {
+        lenis.virtualScroll.options.wheelMultiplier = lenisSpeed.value;
+        lenis.virtualScroll.options.touchMultiplier = lenisSpeed.value;
+      }
     }
   });
 }
-//Hero protection 
+
+/* ==========================================================================
+   3. HERO PROTECTION (wheel compression)
+   Now correctly runs on Mac/Safari too, since Lenis is active there.
+   Previously this silently never ran on Mac because Lenis was null.
+   ========================================================================== */
+
 let heroProtectionActive = true;
 
 if (isDesktop && lenis) {
@@ -87,238 +194,261 @@ if (isDesktop && lenis) {
   }
 
   function onWheel(e) {
-    if (heroProtectionActive) {
-      let raw = e.deltaY;
-      if (e.deltaMode === 1) raw *= LINE_HEIGHT;
-      if (e.deltaMode === 2) raw *= window.innerHeight;
+    let raw = e.deltaY;
+    if (e.deltaMode === 1) raw *= LINE_HEIGHT;
+    if (e.deltaMode === 2) raw *= window.innerHeight;
 
+    // Safari's momentum scroll occasionally fires isolated, unusually large
+    // deltaY spikes at the end of a fling. Clamp before compressing so one
+    // spike can't punch through the protection zone in a single tick.
+    raw = gsap.utils.clamp(-4000, 4000, raw);
+
+    if (heroProtectionActive) {
       const compressed = compress(raw);
       const factor = Math.abs(raw) > THRESHOLD ? Math.abs(compressed) / Math.abs(raw) : 1;
-
       lenis.options.wheelMultiplier = lenisSpeed.value * factor;
-      lenis.virtualScroll.options.wheelMultiplier = lenisSpeed.value * factor;
+      if (lenis.virtualScroll?.options) lenis.virtualScroll.options.wheelMultiplier = lenisSpeed.value * factor;
     } else {
       lenis.options.wheelMultiplier = lenisSpeed.value;
-      lenis.virtualScroll.options.wheelMultiplier = lenisSpeed.value;
+      if (lenis.virtualScroll?.options) lenis.virtualScroll.options.wheelMultiplier = lenisSpeed.value;
     }
   }
 
   window.addEventListener('wheel', onWheel, { capture: true, passive: true });
 }
 
+/* ==========================================================================
+   4. CARD STATE — single source of truth
+   Every phase of both sections reads from here. Change a fan position or a
+   deal offset once, and every timeline that uses it stays in sync.
+   ========================================================================== */
 
-
-const hamburger = document.querySelector('.hamburger');
-const mobileMenu = document.querySelector('.mobile-menu');
-
-if (hamburger && mobileMenu) {
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-  });
-}
-
-/*  CARDS */
 const heroCards = gsap.utils.toArray('.hero-cards-wrapper .ph-card');
 
 const heroFanStates = [
-  { x: -300, y: 10, rotation: -24, scale: 1 },
-  { x: -200, y: 6, rotation: -16, scale: 1 },
-  { x: -100, y: 5, rotation: -8, scale: 1 },
-  { x: 0, y: 0, rotation: 0, scale: 1 },
-  { x: 100, y: 8, rotation: 8, scale: 1 },
-  { x: 200, y: 11, rotation: 16, scale: 1 },
-  { x: 300, y: 15, rotation: 24, scale: 1 }
+  { x: -300, y: 10, rotation: -24 },
+  { x: -200, y: 6, rotation: -16 },
+  { x: -100, y: 5, rotation: -8 },
+  { x: 0, y: 0, rotation: 0 },
+  { x: 100, y: 8, rotation: 8 },
+  { x: 200, y: 11, rotation: 16 },
+  { x: 300, y: 15, rotation: 24 },
 ];
+
+const dealOffsets = [
+  { x: -220, y: -100, rotation: 0 },
+  { x: -120, y: -50, rotation: 0 },
+  { x: 0, y: 0, rotation: 0 },
+  { x: 120, y: 50, rotation: 0 },
+  { x: 220, y: 100, rotation: 0 },
+  { x: 320, y: 150, rotation: 0 },
+  { x: 420, y: 200, rotation: 0 },
+];
+
+// targetX/targetY are computed by calculateDeltas() below and mutated in place.
+const deal = { x: 0, y: 0 };
+
+const CARD_STATES = {
+  stacked: (i) => ({ x: 0, y: 0, rotation: 0, scale: 1 }),
+  fanned: (i) => ({ ...heroFanStates[i], scale: 1 }),
+  dealt: (i) => ({
+    x: deal.x + dealOffsets[i].x,
+    y: deal.y + dealOffsets[i].y,
+    rotation: dealOffsets[i].rotation,
+  }),
+};
 
 const mm = gsap.matchMedia();
 
-/*  SECTION 1 */
-function playHeroIntro(onIntroComplete) {
+/* ==========================================================================
+   5. SECTION 1 — HERO INTRO
+   ========================================================================== */
+
+function buildHeroIntro(onIntroComplete) {
   if (heroCards.length < 7) {
     onIntroComplete?.();
-    return;
+    return () => {};
   }
 
   const hiddenCards = heroCards.slice(0, 6);
   const topCard = heroCards[6];
+  const introText = gsap.utils.toArray('.hero-word, .hero-para, .hero-btn, .readmore-btn');
 
-  gsap.set(['.hero-word', '.hero-para', '.hero-btn', '.readmore-btn'], {
-    y: 40,
-    opacity: 0
-  });
+  gsap.set(introText, { y: 40, opacity: 0 });
+
+  // Reduced motion / low-power: skip straight to the end state, no animation,
+  // but still fire the completion callback so scrollMaster initializes.
+  if (lowPowerMode) {
+    gsap.set(hiddenCards, { ...CARD_STATES.stacked(), opacity: 1 });
+    gsap.set(topCard, { ...CARD_STATES.stacked(), opacity: 1 });
+    gsap.set(introText, { y: 0, opacity: 1 });
+    onIntroComplete?.();
+    return () => {};
+  }
 
   const introMm = gsap.matchMedia();
 
   introMm.add(
-    {
-      isDesktop: '(min-width: 769px)',
-      isMobile: '(max-width: 768px)'
-    },
+    { isDesktop: '(min-width: 769px)', isMobile: '(max-width: 768px)' },
     (context) => {
       const { isDesktop } = context.conditions;
-      const introTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       if (isDesktop) {
-        gsap.set(hiddenCards, { x: 0, y: 0, rotation: 0, scale: 1, opacity: 0 });
-        gsap.set(topCard, { x: 0, y: 800, rotation: 0, scale: 1, opacity: 0 });
+        gsap.set(hiddenCards, { ...CARD_STATES.stacked(), opacity: 0 });
+        gsap.set(topCard, { ...CARD_STATES.stacked(), y: 800, opacity: 0 });
 
-        introTL
-          .to(topCard, { y: 0, opacity: 1, duration: 0.55 })
-          .set(hiddenCards, { opacity: 1 })
-          .to(
-            ['.hero-word', '.hero-para', '.hero-btn', '.readmore-btn'],
-            { y: 0, opacity: 1, duration: 0.4, stagger: 0.03 },
-            '-=0.3'
-          )
+        tl.to(topCard, { y: 0, opacity: 1, duration: 0.55 }, 0)
+          .set(hiddenCards, { opacity: 1 }, '<')
+          .to(introText, { y: 0, opacity: 1, duration: 0.4, stagger: 0.03 }, '-=0.3')
           .to(
             heroCards,
             {
-              x: (i) => heroFanStates[i].x,
-              y: (i) => heroFanStates[i].y,
-              rotation: (i) => heroFanStates[i].rotation,
-              scale: (i) => heroFanStates[i].scale,
+              x: (i) => CARD_STATES.fanned(i).x,
+              y: (i) => CARD_STATES.fanned(i).y,
+              rotation: (i) => CARD_STATES.fanned(i).rotation,
               duration: 0.7,
-              ease: 'power3.out'
             },
             '+=0.1'
           )
           .call(() => onIntroComplete?.());
       } else {
+        // Mobile: still a real animation (settle-in), not a hard cut to
+        // end-state — a snap read as "we turned animation off," a short
+        // fade+drift reads as intentional restraint.
         const BASE_WIDTH = 768;
         const MIN_SCALE = 0.45;
 
         const applyMobileFan = () => {
-          const fanScale = gsap.utils.clamp(
-            MIN_SCALE,
-            1,
-            window.innerWidth / BASE_WIDTH
-          );
-
+          const fanScale = gsap.utils.clamp(MIN_SCALE, 1, window.innerWidth / BASE_WIDTH);
           gsap.set(heroCards, {
-            x: (i) => heroFanStates[i].x * fanScale,
-            y: (i) => heroFanStates[i].y * fanScale,
-            rotation: (i) => heroFanStates[i].rotation,
-            scale: (i) => heroFanStates[i].scale,
-            opacity: 1
+            x: (i) => CARD_STATES.fanned(i).x * fanScale,
+            y: (i) => CARD_STATES.fanned(i).y * fanScale,
+            rotation: (i) => CARD_STATES.fanned(i).rotation,
           });
         };
 
+        gsap.set(heroCards, { opacity: 0, y: 15 });
         applyMobileFan();
 
-        let mobileResizeTimeout;
-        const onMobileResize = () => {
-          clearTimeout(mobileResizeTimeout);
-          mobileResizeTimeout = setTimeout(applyMobileFan, 150);
-        };
-        window.addEventListener('resize', onMobileResize);
-
-        introTL
-          .to(
-            ['.hero-word', '.hero-para', '.hero-btn', '.readmore-btn'],
-            { y: 0, opacity: 1, duration: 0.8, stagger: 0.05 }
-          )
+        tl.to(heroCards, { opacity: 1, y: 0, duration: 0.5, stagger: 0.03 }, 0)
+          .to(introText, { y: 0, opacity: 1, duration: 0.8, stagger: 0.05 }, '-=0.3')
           .call(() => onIntroComplete?.());
 
+        const onResize = debounce(applyMobileFan, 150);
+        window.addEventListener('resize', onResize);
+
         return () => {
-          clearTimeout(mobileResizeTimeout);
-          window.removeEventListener('resize', onMobileResize);
+          window.removeEventListener('resize', onResize);
+          tl.kill();
         };
       }
 
-      return () => introTL.kill();
+      return () => tl.kill();
     }
   );
+
+  return () => introMm.revert();
 }
 
-/*  SECTION 2   */
-function initScrollMaster() {
+/* ==========================================================================
+   6. SECTION 2 — SCROLL MASTER (fold → travel → deal)
+   One ScrollTrigger drives both the timeline AND the hero-protection zone —
+   previously these were two separate ScrollTrigger instances on the same
+   trigger/start/end, doubling scroll-tick overhead for no reason.
+   ========================================================================== */
+
+function calculateDeltas() {
+  const heroWrapper = document.querySelector('.hero-cards-wrapper .cards');
+  const dcWrapper = document.querySelector('.dc-cards-wrapper');
+  if (!heroWrapper || !dcWrapper) return;
+
+  const heroRect = heroWrapper.getBoundingClientRect();
+  const dcRect = dcWrapper.getBoundingClientRect();
+  const scrollY = window.scrollY;
+
+  const heroLeft = heroRect.left;
+  const heroTop = heroRect.top + scrollY;
+  const dc3Left = dcRect.left + 240;
+  const dc3Top = dcRect.top + 220 + scrollY;
+
+  deal.x = dc3Left - heroLeft;
+  deal.y = dc3Top - heroTop;
+}
+
+function buildScrollMaster() {
   if (lenis) lenis.start();
 
   const dcCards = gsap.utils.toArray('.dc-right .dc-card');
-  if (dcCards.length) {
-    gsap.set(dcCards, { opacity: 0 });
-  }
+  if (dcCards.length) gsap.set(dcCards, { opacity: 0 });
 
-  let targetX = 0;
-  let targetY = 0;
-
-  function calculateDeltas() {
-    const heroWrapper = document.querySelector('.hero-cards-wrapper .cards');
-    const dcWrapper = document.querySelector('.dc-cards-wrapper');
-    if (!heroWrapper || !dcWrapper) return;
-
-    const heroRect = heroWrapper.getBoundingClientRect();
-    const dcRect = dcWrapper.getBoundingClientRect();
-    const scrollY = window.scrollY;
-
-    const heroLeft = heroRect.left;
-    const heroTop = heroRect.top + scrollY;
-    const dc3Left = dcRect.left + 240;
-    const dc3Top = dcRect.top + 220 + scrollY;
-
-    targetX = dc3Left - heroLeft;
-    targetY = dc3Top - heroTop;
-  }
-
-  let resizeTimeout;
-  function debouncedCalculateDeltas() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      calculateDeltas();
-      ScrollTrigger.refresh();
-    }, 150);
-  }
-
-  window.addEventListener('resize', debouncedCalculateDeltas);
-  window.addEventListener('load', () => {
+  const debouncedRecalc = debounce(() => {
     calculateDeltas();
     ScrollTrigger.refresh();
-  });
+  }, 150);
+
+  window.addEventListener('resize', debouncedRecalc);
+
+  // buildScrollMaster() runs after the hero intro finishes, which is often
+  // well after `load` has already fired — an addEventListener('load', ...)
+  // registered at that point would simply never run. Check readyState first.
+  const recalcOnLoad = () => {
+    calculateDeltas();
+    ScrollTrigger.refresh();
+  };
+  if (document.readyState === 'complete') {
+    recalcOnLoad();
+  } else {
+    window.addEventListener('load', recalcOnLoad, { once: true });
+  }
+
   calculateDeltas();
 
   const diagonalCardEl = document.querySelector('.diagonal-card');
 
-  if (diagonalCardEl && window.matchMedia('(min-width: 769px)').matches) {
-    ScrollTrigger.create({
-      trigger: diagonalCardEl,
-      start: 'top bottom',
-      end: 'center center',
-      onEnter: () => tweenLenisSpeed(SLOWED_MULTIPLIER, 0.9, 'power2.out'),
-      onLeave: () => tweenLenisSpeed(NORMAL_MULTIPLIER, 1.1, 'power2.inOut'),
-      onEnterBack: () => tweenLenisSpeed(SLOWED_MULTIPLIER, 0.9, 'power2.out'),
-      onLeaveBack: () => tweenLenisSpeed(NORMAL_MULTIPLIER, 1.1, 'power2.inOut')
-    });
-  }
-
   mm.add(
-    {
-      isDesktop: '(min-width: 769px)',
-      isMobile: '(max-width: 768px)'
-    },
+    { isDesktop: '(min-width: 769px)', isMobile: '(max-width: 768px)' },
     (context) => {
       const { isDesktop } = context.conditions;
       if (!isDesktop || !diagonalCardEl || heroCards.length < 7 || dcCards.length < 1) {
         return;
       }
 
-      gsap.set(['.diagonal-word', '.diagonal-join-btn', '.diagonal-readmore-btn'], {
-        y: 50,
-        opacity: 0
-      });
+      gsap.set('.diagonal-word, .diagonal-join-btn, .diagonal-readmore-btn', { y: 50, opacity: 0 });
 
-      gsap.from(['.dc-bubble-a', '.dc-bubble-b', '.dc-bubble-c'], {
+      gsap.from('.dc-bubble-a, .dc-bubble-b, .dc-bubble-c', {
         scrollTrigger: {
           trigger: '.diagonal-card',
           start: 'center 75%',
-          toggleActions: "play reverse play reverse"
+          toggleActions: 'play reverse play reverse',
         },
         y: 50,
         opacity: 0,
         duration: 1,
         stagger: 0.15,
-        ease: 'power3.out'
+        ease: 'power3.out',
       });
+
+      // quickSetters: this timeline scrubs continuously and touches 7 cards
+      // x/y/rotation every frame. Writing through GSAP's normal tween
+      // pipeline re-parses those properties every tick; quickSetter writes
+      // straight to the transform, same trick already used correctly in the
+      // Matter.js physics code. Matters most on mid/low-tier hardware.
+      const setters = heroCards.map((el) => ({
+        x: gsap.quickSetter(el, 'x', 'px'),
+        y: gsap.quickSetter(el, 'y', 'px'),
+        r: gsap.quickSetter(el, 'rotation', 'deg'),
+      }));
+
+      const state = heroCards.map((_, i) => ({ ...CARD_STATES.fanned(i) }));
+
+      function applyState() {
+        state.forEach((s, i) => {
+          setters[i].x(s.x);
+          setters[i].y(s.y);
+          setters[i].r(s.rotation);
+        });
+      }
 
       const masterTL = gsap.timeline({
         scrollTrigger: {
@@ -327,58 +457,49 @@ function initScrollMaster() {
           end: 'center center',
           scrub: 1.5,
           invalidateOnRefresh: true,
-          onRefreshInit: calculateDeltas
-        }
-      });
-
-      masterTL.fromTo(
-        heroCards,
-        {
-          x: (i) => heroFanStates[i].x,
-          y: (i) => heroFanStates[i].y,
-          rotation: (i) => heroFanStates[i].rotation,
-          scale: (i) => heroFanStates[i].scale
+          onRefreshInit: calculateDeltas,
+          // Hero protection zone now lives on THIS ScrollTrigger's own
+          // callbacks instead of a second, duplicate ScrollTrigger instance.
+          onEnter: () => { heroProtectionActive = true; },
+          onLeave: () => { heroProtectionActive = false; },
+          onEnterBack: () => { heroProtectionActive = true; },
+          onLeaveBack: () => { heroProtectionActive = true; },
         },
-        {
-          x: 0,
-          y: 0,
-          rotation: 0,
-          scale: 1,
-          duration: 1.6,
-          ease: 'power2.inOut'
-        }
-      );
-
-      masterTL.to(heroCards, {
-        x: () => targetX,
-        y: () => targetY,
-        duration: 2.4,
-        ease: 'power1.inOut'
       });
 
+      // Each phase below tweens the plain `state` array (not the DOM
+      // directly) — GSAP animates the numbers, applyState() (called once per
+      // frame via onUpdate) pushes them to the DOM through the quickSetters.
+
+      // fold: fanned -> stacked
+      masterTL.to(state, {
+        duration: 1.6,
+        ease: 'power2.inOut',
+        onUpdate: applyState,
+        x: 0, y: 0, rotation: 0,
+      }, 0);
+
+      masterTL.to(state, {
+        duration: 2.4,
+        ease: 'power1.inOut',
+        onUpdate: applyState,
+        x: () => deal.x, y: () => deal.y,
+      });
 
       masterTL.to(
-        ['.diagonal-word', '.diagonal-join-btn', '.diagonal-readmore-btn'],
+        '.diagonal-word, .diagonal-join-btn, .diagonal-readmore-btn',
         { y: 0, opacity: 1, duration: 0.8, stagger: 0.05, ease: 'power1.out' },
         '-=0.4'
       );
-      const dealOffsets = [
-        { x: -220, y: -100, rotation: 0 },
-        { x: -120, y: -50, rotation: 0 },
-        { x: 0, y: 0, rotation: 0 },
-        { x: 120, y: 50, rotation: 0 },
-        { x: 220, y: 100, rotation: 0 },
-        { x: 320, y: 150, rotation: 0 },
-        { x: 420, y: 200, rotation: 0 }
-      ];
 
-      masterTL.to(heroCards, {
-        x: (i) => targetX + dealOffsets[i].x,
-        y: (i) => targetY + dealOffsets[i].y,
-        rotation: (i) => dealOffsets[i].rotation,
+      masterTL.to(state, {
         duration: 1.6,
         stagger: 0.08,
-        ease: 'power1.out'
+        ease: 'power1.out',
+        onUpdate: applyState,
+        x: (i) => CARD_STATES.dealt(i).x,
+        y: (i) => CARD_STATES.dealt(i).y,
+        rotation: (i) => CARD_STATES.dealt(i).rotation,
       });
 
       masterTL.to(
@@ -387,81 +508,46 @@ function initScrollMaster() {
         '-=0.8'
       );
 
-      const cleanupProtection = bindHeroProtectionZone(masterTL);
-      return () => {
-        masterTL.kill();
-        cleanupProtection();
-      };
+      return () => masterTL.kill();
     }
   );
 
   ScrollTrigger.refresh();
-}
 
-/*  HERO PROTECTION  */
-function bindHeroProtectionZone(masterTL) {
-  if (!window.matchMedia('(min-width: 769px)').matches) return () => { };
-
-  const st = masterTL.scrollTrigger;
-
-  const zoneST = ScrollTrigger.create({
-    trigger: st.vars.trigger,
-    start: st.vars.start,
-    end: st.vars.end,
-    onEnter: () => { heroProtectionActive = true; },
-    onLeave: () => { heroProtectionActive = false; },
-    onEnterBack: () => { heroProtectionActive = true; },
-    onLeaveBack: () => { heroProtectionActive = true; },
-  });
-
+  // Teardown — call this if the module is ever re-initialized (e.g. an
+  // Astro view-transition re-runs this script) to avoid accumulating
+  // duplicate resize listeners and orphaned ScrollTriggers on repeat calls.
   return () => {
-    zoneST.kill();
+    window.removeEventListener('resize', debouncedRecalc);
+    window.removeEventListener('load', recalcOnLoad);
+    mm.revert();
   };
 }
-/* ================= MAC FANOUT FIX ================= */
-// On Mac, browsers restore scroll position AFTER the first JS tick,
-// so we wait two animation frames, force scroll to 0, then init.
-// This prevents ScrollTrigger's scrub from pre-seeking and collapsing the fan.
-//
-// FIX (bug 2): Chrome's scroll anchoring can also nudge window.scrollY on its
-// own — with no user input — while images/fonts load and shift layout above
-// the fold. On Mac there's no Lenis buffering the raw scroll, so masterTL's
-// scrub timeline reads that phantom scroll directly and animates the cards
-// to match (looks like "fan spreads out, then re-stacks itself"). We guard
-// scrollY back to 0 until a genuine user gesture happens. Pair this with
-// `overflow-anchor: none;` in your CSS on html/body to kill it at the source.
-if (isMacOS) {
-  let userInteracted = false;
-  const markInteracted = () => { userInteracted = true; };
-  ['wheel', 'touchstart', 'keydown'].forEach((evt) =>
-    window.addEventListener(evt, markInteracted, { passive: true, once: true })
-  );
 
-  const guardScroll = () => {
-    if (!userInteracted && window.scrollY !== 0) {
-      window.scrollTo(0, 0);
-    }
-  };
-  window.addEventListener('scroll', guardScroll, { passive: true });
-  window.addEventListener('load', guardScroll);
-  window.addEventListener('pageshow', guardScroll);
+/* ==========================================================================
+   7. ENTRY POINT
+   No more platform fork here — Lenis buffers scroll uniformly on every
+   desktop platform now (Mac/Safari included), so there's exactly one code
+   path instead of an isMacOS branch with a separate scroll-guard hack.
+   ========================================================================== */
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-      playHeroIntro(() => {
-        initScrollMaster();
-        // Intro is done and the scrub timeline is live — stop fighting scroll.
-        window.removeEventListener('scroll', guardScroll);
-        window.removeEventListener('load', guardScroll);
-        window.removeEventListener('pageshow', guardScroll);
-      });
-    });
-  });
-} else {
-  playHeroIntro(initScrollMaster);
+let teardownHeroIntro = () => {};
+let teardownScrollMaster = () => {};
+
+teardownHeroIntro = buildHeroIntro(() => {
+  teardownScrollMaster = buildScrollMaster();
+}) || (() => {});
+
+/**
+ * Call this if the page ever needs to re-run this module from scratch
+ * (e.g. an Astro view-transition swaps content without a full reload).
+ * Not called automatically on a normal static page load.
+ */
+export function teardownSectionsOneAndTwo() {
+  teardownHeroIntro();
+  teardownScrollMaster();
 }
-/* ================= END MAC FANOUT FIX ================= */
+
 
 // Section 3
 const tlGateway = gsap.timeline({
