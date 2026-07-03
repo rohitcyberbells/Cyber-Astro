@@ -1,3 +1,14 @@
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
+import Matter from "matter-js";
+import * as THREE from "three";
+
+window.gsap = gsap;
+window.Lenis = Lenis;
+window.Matter = Matter;
+window.THREE = THREE;
+
 /* ================= SCROLL RESTORATION ================= */
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
@@ -502,40 +513,6 @@ const bottomMarquee = gsap.fromTo(
   }
 );
 
-// ===== Wave Animation =====
-const waveTweens = [];
-
-gsap.set(".top-track .wavy-card", { y: -50 });
-gsap.set(".bottom-track .wavy-card", { y: 50 });
-
-gsap.utils.toArray(".top-track .wavy-card").forEach((card, i) => {
-  waveTweens.push(
-    gsap.to(card, {
-      y: 50,
-      duration: 1.5,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-      delay: -(i * 0.3),
-      paused: true
-    })
-  );
-});
-
-gsap.utils.toArray(".bottom-track .wavy-card").forEach((card, i) => {
-  waveTweens.push(
-    gsap.to(card, {
-      y: -50,
-      duration: 1.5,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-      delay: -(i * 0.3),
-      paused: true
-    })
-  );
-});
-
 // ===== Play / Pause when section is visible =====
 ScrollTrigger.create({
   trigger: ".wavy-cards",
@@ -552,15 +529,11 @@ ScrollTrigger.create({
 function playAnimations() {
   topMarquee.resume();
   bottomMarquee.resume();
-
-  waveTweens.forEach(tween => tween.resume());
 }
 
 function pauseAnimations() {
   topMarquee.pause();
   bottomMarquee.pause();
-
-  waveTweens.forEach(tween => tween.pause());
 }
 
 mm.add("(min-width: 769px)", () => {
@@ -716,8 +689,9 @@ function initMatterPhysics() {
   const engine = Engine.create();
   engine.enableSleeping = true;
   engine.world.gravity.y = 0.55;
-  engine.positionIterations = 8;
-  engine.velocityIterations = 8;
+  const cores = window.navigator.hardwareConcurrency || 4;
+  engine.positionIterations = cores > 4 ? 8 : 4;
+  engine.velocityIterations = cores > 4 ? 8 : 4;
   engine.constraintIterations = 3;
 
   Composite.add(engine.world, [
@@ -908,8 +882,9 @@ function initFolderPhysics() {
   const engine = Engine.create();
   engine.enableSleeping = true;
   engine.world.gravity.y = 1.8;
-  engine.positionIterations = 8;
-  engine.velocityIterations = 8;
+  const cores = window.navigator.hardwareConcurrency || 4;
+  engine.positionIterations = cores > 4 ? 8 : 4;
+  engine.velocityIterations = cores > 4 ? 8 : 4;
   engine.constraintIterations = 3;
 
   Composite.add(engine.world, [
@@ -1074,6 +1049,20 @@ if (slides.length > 0 && nextBtn && prevBtn) {
 }
 
 /*  SECTION 5  */
+const svgEl = document.querySelector('.marketplace svg');
+if (svgEl) {
+  svgEl.pauseAnimations(); // Start paused
+  ScrollTrigger.create({
+    trigger: ".marketplace",
+    start: "top bottom",
+    end: "bottom top",
+    onEnter: () => svgEl.unpauseAnimations(),
+    onEnterBack: () => svgEl.unpauseAnimations(),
+    onLeave: () => svgEl.pauseAnimations(),
+    onLeaveBack: () => svgEl.pauseAnimations(),
+  });
+}
+
 function initParticleWave() {
   const container = document.getElementById('particle-wave-container');
   if (!container || !window.THREE) return;//net
