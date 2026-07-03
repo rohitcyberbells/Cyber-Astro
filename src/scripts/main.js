@@ -1,13 +1,8 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import Matter from "matter-js";
-import * as THREE from "three";
-
 window.gsap = gsap;
 window.Lenis = Lenis;
-window.Matter = Matter;
-window.THREE = THREE;
 
 /* ================= SCROLL RESTORATION ================= */
 if ('scrollRestoration' in history) {
@@ -21,6 +16,12 @@ const isDesktop = window.matchMedia('(min-width: 769px)').matches;
 
 const platformStr = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent;
 const isMacOS = /mac/i.test(platformStr) && !/iPhone|iPod/.test(navigator.userAgent);
+const isApple = /Mac|iPod|iPhone|iPad/i.test(platformStr) || /iPod|iPhone|iPad/i.test(navigator.userAgent);
+
+// Only normalize scroll on non-Apple devices to preserve native trackpad momentum!
+if (!isApple) {
+  ScrollTrigger.normalizeScroll(true);
+}
 
 const lenis = (isDesktop && !isMacOS)
   ? new Lenis({
@@ -669,11 +670,12 @@ ScrollTrigger.create({
   }
 });
 
-function initMatterPhysics() {
+async function initMatterPhysics() {
   const container = document.querySelector(".large-grid-top");
   const circles = document.querySelectorAll(".lgt-circle");
 
-  if (!container || circles.length === 0 || !window.Matter) return;
+  if (!container || circles.length === 0) return;
+  const Matter = await import("matter-js");
 
   const width = container.clientWidth;
   const height = container.clientHeight;
@@ -1063,11 +1065,11 @@ if (svgEl) {
   });
 }
 
-function initParticleWave() {
+async function initParticleWave() {
   const container = document.getElementById('particle-wave-container');
-  if (!container || !window.THREE) return;//net
+  if (!container) return;
 
-
+  const THREE = await import("three");
   const W = () => container.clientWidth;
   const H = () => container.clientHeight;
 
