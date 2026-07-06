@@ -358,7 +358,7 @@ import '../styles/global.css';
             <h2 class="storytelling-title">
                 <span class="storytelling-word">Ideas we</span><span class="storytelling-word"> turned
                     into</span><br>
-                <span class="storytelling-word"> Mobile </span><span class="storytelling-word">Experiences</span>
+                <span class="storytelling-word"> Mobile </span><span class="storytelling-word"> Experiences </span>
             </h2>
 
             <div class="story-cards" id="storyCards">
@@ -452,8 +452,8 @@ import '../styles/global.css';
 
                 <h2 class="market-title">
                     <span class="market-text">Intelligence, <span class="text-purple">Built into</span></span><br>
-                    <span class="market-text"><span class="text-purple">Every</span></span>
-                    <span class="market-text">Experience.</span>
+                    <span class="market-text"><span class="text-purple">Every </span></span>
+                    <span class="market-text"> Experience.</span>
                 </h2>
 
                 <p class="market-para">
@@ -476,7 +476,7 @@ import '../styles/global.css';
 
                     <div class="mp-card">
                         <div class="mp-img-placeholder">
-                            <img src="/assets/Images/SmartRecommendation.png" alt="">
+                            <img src="/assets/Images/Recommendation.png" alt="">
                         </div>
                         <h4>Smart Recommendation</h4>
                     </div>
@@ -802,6 +802,30 @@ import '../styles/global.css';
             }
         }, { passive: true });
         window.addEventListener('resize', updateActiveDot);
+    })();
+
+    // Hamburger Menu Toggle
+    (function() {
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const overlayLinks = document.querySelectorAll('.mobile-menu .overlay-menu a, .mobile-menu .contact-btn');
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                const isExpanded = hamburger.classList.contains('active');
+                hamburger.setAttribute('aria-expanded', isExpanded);
+                document.body.style.overflow = isExpanded ? 'hidden' : '';
+            });
+            overlayLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
     })();
     </script>
 </body>

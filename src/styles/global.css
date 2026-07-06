@@ -1,15 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    /* Original tokens (kept as-is) */
     --bg-color: #0d0f14;
     --text-primary: #ffffff;
     --text-secondary: #94a3b8;
     --accent: #6366f1;
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.08);
-
-    /* ---- Color system (same literal values, now referenced everywhere) ---- */
     --color-ink: #111;
     --color-ink-soft: #444;
     --color-muted: #555;
@@ -50,6 +47,8 @@
 html,
 body {
     overflow-anchor: none;
+    /* Safari Specific */
+    overscroll-behavior: none;
 }
 
 body {
@@ -207,6 +206,9 @@ html.lenis body {
     overflow: hidden;
     transform-origin: bottom center;
     padding: 5px 5px 5px 5px;
+    /* Scrubbed via quickSetter on every scroll tick in main.js - hint the
+       compositor to promote this to its own layer. */
+    will-change: transform;
 }
 
 .ph-card img {
@@ -516,6 +518,7 @@ html.lenis body {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     background: var(--color-placeholder);
     overflow: hidden;
+    will-change: transform;
 }
 
 .dcc1 {
@@ -827,12 +830,6 @@ html.lenis body {
 }
 
 /* Section 5: Marketplace */
-
-/* NOTE: this section had a second, later .marketplace / .marketplace-title
-   block further down the file that silently won the cascade (see merged
-   values below). The mobile clamp() overrides that used to live here were
-   actually already dead — the later unconditional rule beat them in source
-   order regardless of viewport. Merged to match what actually renders today. */
 .marketplace {
     position: relative;
     z-index: 0;
@@ -1104,9 +1101,7 @@ html.lenis body {
     background: white;
 }
 
-/*=============================
-        SECTION 9
-=============================*/
+/* SECTION 9 */
 
 .market {
     width: 100%;
@@ -1122,10 +1117,6 @@ html.lenis body {
     flex-direction: column;
     gap: 70px;
 }
-
-/*--------------------
-    CONTENT
---------------------*/
 
 .market-left {
     width: 100%;
@@ -1165,10 +1156,6 @@ html.lenis body {
     color: var(--color-muted);
     font-weight: 500;
 }
-
-/*--------------------
-    CARDS
---------------------*/
 
 .market-right {
     width: 100%;
@@ -1231,10 +1218,6 @@ html.lenis body {
     color: var(--color-ink);
 }
 
-/*--------------------
-    SCROLLBAR
---------------------*/
-
 .scrollbar-thumb {
     width: 25%;
     height: 4px;
@@ -1249,10 +1232,6 @@ html.lenis body {
 
     transition: transform .35s ease;
 }
-
-/*--------------------
-    TABLET
---------------------*/
 
 @media (max-width: 992px) {
 
@@ -1270,9 +1249,6 @@ html.lenis body {
 
 }
 
-/*--------------------
-    MOBILE
---------------------*/
 
 @media (max-width: 768px) {
 
@@ -1352,19 +1328,19 @@ html.lenis body {
     position: relative;
 }
 
-@media (min-width: 1600px) {
-    .shrink-section-container {
-        max-width: 1500px;
-        margin: 0 auto;
-    }
-}
-
 .animation-wrapper {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+@media (min-width: 1600px) {
+    .shrink-section-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
 }
 
 .shrink-section .card {
@@ -1374,6 +1350,7 @@ html.lenis body {
     border-radius: var(--radius-card);
     overflow: hidden;
     object-fit: contain;
+    will-change: transform, opacity;
 }
 
 .shrink-section .card img {
@@ -1450,7 +1427,8 @@ html.lenis body {
 .shrink-section .card.shrink-c5 img,
 .shrink-section .card.shrink-c8 img,
 .shrink-section .card.shrink-c9 img,
-.shrink-section .card.shrink-c10 img {
+.shrink-section .card.shrink-c10 img,
+.shrink-section .card.shrink-c5 img {
     object-fit: cover;
     object-position: center;
 }
@@ -1472,7 +1450,6 @@ html.lenis body {
 .shrink-c8 {
     left: 62%;
     top: 8vh;
-    width: 20%;
     height: 25vh;
     transform: perspective(1200px) rotateY(-10deg);
 }
@@ -1480,7 +1457,6 @@ html.lenis body {
 .shrink-c9 {
     left: 62%;
     top: 37vh;
-    width: 20%;
     height: 25vh;
     transform: perspective(1200px) rotateY(-10deg);
 }
@@ -1488,7 +1464,6 @@ html.lenis body {
 .shrink-c10 {
     left: 62%;
     top: 66vh;
-    width: 20%;
     height: 25vh;
     transform: perspective(1200px) rotateY(-10deg);
 }
@@ -1623,6 +1598,7 @@ html.lenis body {
     height: 100px;
     border-radius: 50%;
     background-color: transparent;
+    will-change: transform;
 }
 
 .c1 {
@@ -1758,23 +1734,23 @@ html.lenis body {
     margin-top: 15px;
 }
 
-.contact-form .form-group {
+.form-group {
     width: 100%;
 }
 
-.contact-form .form-group label {
+.form-group label {
     display: block;
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 8px;
 }
 
-.contact-form .form-group label span {
+.form-group label span {
     color: var(--color-white);
 }
 
-.contact-form .form-group input,
-.contact-form .form-group textarea {
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 16px 18px;
     border-radius: 16px;
@@ -1789,18 +1765,18 @@ html.lenis body {
     box-sizing: border-box;
 }
 
-.contact-form .form-group input::placeholder,
-.contact-form .form-group textarea::placeholder {
+.form-group input::placeholder,
+.form-group textarea::placeholder {
     color: rgba(255, 255, 255, .65);
 }
 
-.contact-form .form-group input:focus,
-.contact-form .form-group textarea:focus {
+.form-group input:focus,
+.form-group textarea:focus {
     border-color: rgba(255, 255, 255, .6);
     background: rgba(255, 255, 255, .12);
 }
 
-.contact-form .form-group textarea {
+.form-group textarea {
     min-height: 130px;
 }
 
@@ -1851,9 +1827,6 @@ html.lenis body {
 
 .Meet,
 .Archives {
-    /* padding/border-radius/font-size/font-weight/border/cursor/transition
-       are fully restated by the shimmer-button block further down and were
-       dead weight here; width is the only property that actually survives. */
     width: fit-content;
 }
 
@@ -2436,11 +2409,11 @@ html.lenis body {
     gap: 15px;
 }
 
-.quote-form .form-row .form-group {
+.form-row .form-group {
     flex: 1;
 }
 
-.quote-form .form-group {
+.form-group {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -2471,7 +2444,7 @@ html.lenis body {
     background: var(--color-white);
 }
 
-.quote-form .form-group textarea {
+.form-group textarea {
     resize: vertical;
     min-height: 100px;
 }
@@ -2483,7 +2456,7 @@ html.lenis body {
 }
 
 .quote-submit-btn {
-    background: var(--color-ink);
+    background: var(--accent);
     color: var(--color-white);
     border: none;
     border-radius: 8px;
@@ -2499,11 +2472,11 @@ html.lenis body {
 }
 
 .quote-submit-btn:hover {
-    background: var(--color-ink-soft);
+    background: var(--color-indigo-dark);
 }
 
 .quote-submit-btn:disabled {
-    background: var(--color-muted);
+    background: var(--color-indigo-darker);
     cursor: not-allowed;
     opacity: 0.7;
 }
@@ -2548,8 +2521,6 @@ html.lenis body {
     will-change: transform;
 }
 
-/* Consolidated: .top-track and .bottom-track always used identical
-   per-index delays, so each pair is now a single rule instead of two. */
 .top-track .wavy-card:nth-child(1),
 .bottom-track .wavy-card:nth-child(1) {
     animation-delay: 0s;
@@ -2721,9 +2692,7 @@ html.lenis body {
     pointer-events: none;
 }
 
-/* ============================================================
-   NEW — mobile swiper behaviour
-   ============================================================ */
+/* SWIPER  */
 @media (max-width: 768px) {
     .storytelling {
         padding: 60px 0;
@@ -2767,11 +2736,13 @@ html.lenis body {
     gap: 8px;
     margin-top: 24px;
 }
+
 @media (max-width: 768px) {
     .swiper-dots {
         display: flex;
     }
 }
+
 .swiper-dot {
     width: 8px;
     height: 8px;
@@ -2780,6 +2751,7 @@ html.lenis body {
     transition: background 0.2s, width 0.2s;
     cursor: pointer;
 }
+
 .swiper-dot.active {
     background: var(--color-blue-bright);
     width: 22px;
@@ -2790,4 +2762,4 @@ html.lenis body {
     html.low-power-scroll {
         scroll-behavior: smooth;
     }
-}
+}

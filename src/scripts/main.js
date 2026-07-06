@@ -54,6 +54,7 @@ function detectDeviceTier() {
 }
 
 const deviceTier = detectDeviceTier();
+const lowPowerMode = false; // Temporarily force false to ensure animations always play
 
 let lenis = null;
 
