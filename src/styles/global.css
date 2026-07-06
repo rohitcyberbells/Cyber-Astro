@@ -1,12 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
+    /* Original tokens (kept as-is) */
     --bg-color: #0d0f14;
     --text-primary: #ffffff;
     --text-secondary: #94a3b8;
     --accent: #6366f1;
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.08);
+
+    /* ---- Color system (same literal values, now referenced everywhere) ---- */
+    --color-ink: #111;
+    --color-ink-soft: #444;
+    --color-muted: #555;
+    --color-white: #fff;
+    --color-off-white: #fdfdfd;
+    --color-surface: #fbfbfb;
+    --color-surface-alt: #fafafa;
+    --color-placeholder: #eee;
+    --color-placeholder-alt: #f0f0f0;
+    --color-border-light: #eaeaea;
+    --color-border-dim: #d4d4d4;
+    --color-navy: #1e1b4b;
+    --color-near-black: #222;
+    --color-black: #000;
+    --color-red: #a02222;
+    --color-blue-link: #2563eb;
+    --color-blue-bright: #0044ff;
+    --color-purple: #bf40ff;
+    --color-indigo: #6366f1;
+    --color-indigo-dark: #4f46e5;
+    --color-indigo-darker: #4338ca;
+    --color-success: #10b981;
+    --color-danger: #ef4444;
+
+    /* ---- Repeated component values ---- */
+    --radius-pill: 30px;
+    --radius-card: 20px;
+    --radius-card-lg: 24px;
+    --transition-fast: 0.2s;
 }
 
 * {
@@ -67,7 +99,7 @@ html.lenis body {
     gap: 8px;
     font-size: 1rem;
     font-weight: 600;
-    color: #111;
+    color: var(--color-ink);
 }
 
 .nav-logo img {
@@ -84,7 +116,7 @@ html.lenis body {
 
 .nav-link {
     text-decoration: none;
-    color: #111;
+    color: var(--color-ink);
     font-size: 0.85rem;
     font-weight: 500;
     display: flex;
@@ -101,7 +133,7 @@ html.lenis body {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: #111;
+    background: var(--color-ink);
     position: relative;
 }
 
@@ -123,7 +155,7 @@ html.lenis body {
 .hero {
     width: 100%;
     padding: 60px 20px 20px;
-    background: #fbfbfb;
+    background: var(--color-surface);
     text-align: center;
     position: relative;
     z-index: 10;
@@ -135,11 +167,11 @@ html.lenis body {
 }
 
 .hero-title {
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 1rem + 2.67vw, 3rem);
     font-weight: 600;
     line-height: 1.05;
     letter-spacing: -0.04em;
-    color: #111;
+    color: var(--color-ink);
     margin-bottom: 10px;
 }
 
@@ -170,7 +202,7 @@ html.lenis body {
     width: 100%;
     height: 100%;
     border-radius: 16px;
-    background: #eee;
+    background: var(--color-placeholder);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transform-origin: bottom center;
@@ -186,7 +218,7 @@ html.lenis body {
 
 .hero-para {
     font-size: 0.95rem;
-    color: #444;
+    color: var(--color-ink-soft);
     margin-bottom: 30px;
     margin-top: 20px;
     font-weight: 500;
@@ -205,11 +237,11 @@ html.lenis body {
 }
 
 .hero-btn {
-    background: #111;
+    background: var(--color-ink);
     color: white;
     font-weight: 500;
     padding: 14px 32px;
-    border-radius: 30px;
+    border-radius: var(--radius-pill);
     border: none;
     font-size: 0.95rem;
     cursor: pointer;
@@ -218,29 +250,6 @@ html.lenis body {
     /* Added */
     position: relative;
     overflow: hidden;
-}
-
-.hero-btn::after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -40%;
-    width: 50%;
-    height: 200%;
-
-    /* Brighter glow */
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.95),
-            transparent);
-
-    filter: blur(20px);
-
-    /* Start off-screen on the left */
-    transform: translateX(-220%);
-    transition: transform 0.8s cubic-bezier(.22, 1, .36, 1);
-
-    pointer-events: none;
 }
 
 .hero-btn::after {
@@ -271,12 +280,13 @@ html.lenis body {
     transform: translateX(420%);
 }
 
-.readmore-btn {
-    background: #fdfdfd;
-    color: #111;
+.readmore-btn,
+.diagonal-readmore-btn {
+    background: var(--color-off-white);
+    color: var(--color-ink);
     font-weight: 500;
     padding: 14px 32px;
-    border-radius: 30px;
+    border-radius: var(--radius-pill);
     border: 1px solid rgba(0, 0, 0, 0.9);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
     font-size: 0.95rem;
@@ -288,11 +298,13 @@ html.lenis body {
     isolation: isolate;
 }
 
-.readmore-btn:hover {
+.readmore-btn:hover,
+.diagonal-readmore-btn:hover {
     transform: translateY(-2px);
 }
 
-.readmore-btn::before {
+.readmore-btn::before,
+.diagonal-readmore-btn::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -300,15 +312,15 @@ html.lenis body {
     padding: 2px;
     background: linear-gradient(90deg,
             transparent,
-            #2563eb,
+            var(--color-blue-link),
             transparent);
 
     -webkit-mask:
-        linear-gradient(#fff, #fff) content-box,
-        linear-gradient(#fff, #fff);
+        linear-gradient(var(--color-white), var(--color-white)) content-box,
+        linear-gradient(var(--color-white), var(--color-white));
     mask:
-        linear-gradient(#fff, #fff) content-box,
-        linear-gradient(#fff, #fff);
+        linear-gradient(var(--color-white), var(--color-white)) content-box,
+        linear-gradient(var(--color-white), var(--color-white));
     -webkit-mask-composite: xor;
     mask-composite: exclude;
 
@@ -317,7 +329,8 @@ html.lenis body {
     pointer-events: none;
 }
 
-.readmore-btn:hover::before {
+.readmore-btn:hover::before,
+.diagonal-readmore-btn:hover::before {
     transform: translateX(100%);
 }
 
@@ -325,7 +338,7 @@ html.lenis body {
 .diagonal-card {
     width: 100%;
     padding: 180px 40px;
-    background: #fbfbfb;
+    background: var(--color-surface);
 }
 
 .diagonal-card-container {
@@ -342,17 +355,12 @@ html.lenis body {
     max-width: 500px;
 }
 
-.dc-right {
-    flex: 1;
-    position: relative;
-}
-
 .diagonal-title {
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 1rem + 2.67vw, 3rem);
     font-weight: 600;
     line-height: 1.1;
     letter-spacing: -0.04em;
-    color: #111;
+    color: var(--color-ink);
     margin-bottom: 30px;
 }
 
@@ -361,12 +369,12 @@ html.lenis body {
 }
 
 .red-text {
-    color: #a02222;
+    color: var(--color-red);
 }
 
 .diagonal-para {
     font-size: 1rem;
-    color: #444;
+    color: var(--color-ink-soft);
     line-height: 1.6;
     margin-bottom: 40px;
     font-weight: 500;
@@ -378,11 +386,11 @@ html.lenis body {
 }
 
 .diagonal-join-btn {
-    background: #111;
+    background: var(--color-ink);
     color: white;
     font-weight: 500;
     padding: 14px 32px;
-    border-radius: 30px;
+    border-radius: var(--radius-pill);
     border: none;
     font-size: 0.95rem;
     cursor: pointer;
@@ -423,56 +431,6 @@ html.lenis body {
     transform: translateY(-2px);
 }
 
-.diagonal-readmore-btn {
-    background: #fdfdfd;
-    color: #111;
-    font-weight: 500;
-    padding: 14px 32px;
-    border-radius: 30px;
-    border: 1px solid rgba(0, 0, 0, 0.9);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: transform 0.2s;
-
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-}
-
-.diagonal-readmore-btn:hover {
-    transform: translateY(-2px);
-}
-
-.diagonal-readmore-btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 2px;
-    background: linear-gradient(90deg,
-            transparent,
-            #2563eb,
-            transparent);
-
-    -webkit-mask:
-        linear-gradient(#fff, #fff) content-box,
-        linear-gradient(#fff, #fff);
-    mask:
-        linear-gradient(#fff, #fff) content-box,
-        linear-gradient(#fff, #fff);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-
-    transform: translateX(-100%);
-    transition: transform .7s ease;
-    pointer-events: none;
-}
-
-.diagonal-readmore-btn:hover::before {
-    transform: translateX(100%);
-}
-
 .dc-right {
     flex: 1.5;
     display: flex;
@@ -491,7 +449,7 @@ html.lenis body {
 .dc-chat-bubble {
     position: absolute;
     padding: 8px 16px;
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     font-size: 0.95rem;
     font-weight: 600;
     color: white;
@@ -515,18 +473,18 @@ html.lenis body {
 }
 
 .dc-bubble-a {
-    background: #1e1b4b;
+    background: var(--color-navy);
     top: 102px;
     left: 100px;
     white-space: nowrap;
 }
 
 .dc-bubble-a::after {
-    border-top-color: #1e1b4b;
+    border-top-color: var(--color-navy);
 }
 
 .dc-bubble-b {
-    background: #111;
+    background: var(--color-ink);
     top: 468px;
     left: 330px;
     white-space: nowrap;
@@ -534,29 +492,29 @@ html.lenis body {
 
 .dc-bubble-b::after {
     border-top: none;
-    border-bottom: 8px solid #111;
+    border-bottom: 8px solid var(--color-ink);
     bottom: auto;
     top: -8px;
 }
 
 .dc-bubble-c {
-    background: #a02222;
+    background: var(--color-red);
     top: 280px;
     left: 560px;
     white-space: nowrap;
 }
 
 .dc-bubble-c::after {
-    border-top-color: #a02222;
+    border-top-color: var(--color-red);
 }
 
 .dc-card {
     position: absolute;
     width: 220px;
     height: 280px;
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-    background: #eee;
+    background: var(--color-placeholder);
     overflow: hidden;
 }
 
@@ -596,7 +554,7 @@ html.lenis body {
     width: 100%;
     padding: 60px 20px;
     background: transparent;
-    color: #111;
+    color: var(--color-ink);
 }
 
 .gateway-container {
@@ -622,7 +580,7 @@ html.lenis body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #444;
+    color: var(--color-ink-soft);
 }
 
 .gateway-word {
@@ -630,11 +588,11 @@ html.lenis body {
 }
 
 .gateway-title {
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 1rem + 2.67vw, 3rem);
     font-weight: 600;
     line-height: 1.1;
     letter-spacing: -0.04em;
-    color: #111;
+    color: var(--color-ink);
 }
 
 .gateway-author {
@@ -642,10 +600,10 @@ html.lenis body {
 }
 
 .gateway-author-bubble {
-    background: #222;
+    background: var(--color-near-black);
     color: white;
     padding: 8px 16px;
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     font-size: 0.95rem;
     font-weight: 600;
     position: relative;
@@ -661,13 +619,13 @@ html.lenis body {
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 8px solid #222;
+    border-top: 8px solid var(--color-near-black);
 }
 
 .gateway-img-wrapper {
     width: 100%;
     height: 500px;
-    border-radius: 24px;
+    border-radius: var(--radius-card-lg);
     position: relative;
     overflow: hidden;
 }
@@ -719,7 +677,7 @@ html.lenis body {
     height: 44px;
     border-radius: 50%;
     background: white;
-    color: #111;
+    color: var(--color-ink);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -738,7 +696,7 @@ html.lenis body {
 .marquee {
     width: 100%;
     padding: 80px 20px;
-    background: #fafafa;
+    background: var(--color-surface-alt);
 }
 
 .marquee-container {
@@ -760,7 +718,7 @@ html.lenis body {
 .marquee-title {
     font-size: 3rem;
     font-weight: 700;
-    color: #111;
+    color: var(--color-ink);
     margin-bottom: 20px;
     letter-spacing: -0.04em;
 }
@@ -772,7 +730,7 @@ html.lenis body {
 
 .marquee-para {
     font-size: 1.05rem;
-    color: #444;
+    color: var(--color-ink-soft);
     line-height: 1.5;
     font-weight: 500;
 }
@@ -795,7 +753,7 @@ html.lenis body {
 .logo-item {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #d4d4d4;
+    color: var(--color-border-dim);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     display: flex;
@@ -816,12 +774,12 @@ html.lenis body {
 
 .fade-left {
     left: 0;
-    background: linear-gradient(to right, #fafafa 0%, rgba(250, 250, 250, 0) 100%);
+    background: linear-gradient(to right, var(--color-surface-alt) 0%, rgba(250, 250, 250, 0) 100%);
 }
 
 .fade-right {
     right: 0;
-    background: linear-gradient(to left, #fafafa 0%, rgba(250, 250, 250, 0) 100%);
+    background: linear-gradient(to left, var(--color-surface-alt) 0%, rgba(250, 250, 250, 0) 100%);
 }
 
 @keyframes scroll-marquee {
@@ -848,7 +806,7 @@ html.lenis body {
     position: absolute;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     backdrop-filter: blur(10px);
     opacity: 0;
     width: 15vw;
@@ -870,120 +828,55 @@ html.lenis body {
 
 /* Section 5: Marketplace */
 
+/* NOTE: this section had a second, later .marketplace / .marketplace-title
+   block further down the file that silently won the cascade (see merged
+   values below). The mobile clamp() overrides that used to live here were
+   actually already dead — the later unconditional rule beat them in source
+   order regardless of viewport. Merged to match what actually renders today. */
 .marketplace {
     position: relative;
+    z-index: 0;
     width: 100%;
     min-height: 100vh;
+    height: 100vh;
     padding: 180px 20px 80px 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
-    overflow: hidden;
+    background: var(--color-white);
+    overflow: visible;
     text-align: center;
 }
 
-.marketplace-bg {
-    position: absolute;
-    inset: -50px;
-    z-index: -1;
-    background: linear-gradient(135deg, #eef2ff, #ffffff, #e0e7ff);
-    filter: url(#water-filter);
-}
-
 .marketplace-container {
-    max-width: 1400px;
+    max-width: 900px;
     width: 100%;
     margin: 0 auto;
     position: relative;
     padding: 0 20px;
+    text-align: center;
 }
 
 .marketplace-title {
-    font-size: clamp(1rem, 5vw, 3.5rem);
+    font-size: 2.8rem;
     font-weight: 500;
     line-height: 1.3;
-    color: #111;
+    color: var(--color-ink);
     letter-spacing: -0.02em;
     max-width: 1400px;
     margin: 0 auto;
     position: relative;
     z-index: 1;
-    text-align: center;
+    opacity: 1;
 }
 
-.mp-text-left,
-.mp-text-right {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-.mp-text-left {
-    position: relative;
-
-    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-}
-
-.mp-text-right {
-    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
-}
-
-.folder-icons-cluster {
-    position: relative;
-    width: 100%;
-    height: 120px;
-    margin-top: 40px;
-    overflow: visible;
-}
-
-.cluster-icon {
-    position: absolute;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    top: -50px;
-    left: 0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-}
-
-.cluster-icon:nth-child(1) {
-    background-color: #1a5cff;
-}
-
-.cluster-icon:nth-child(2) {
-    background-color: #ff5722;
-}
-
-.cluster-icon:nth-child(3) {
-    background-color: #4caf50;
-}
-
-.cluster-icon:nth-child(4) {
-    background-color: #ffeb3b;
-}
-
-.cluster-icon:nth-child(5) {
-    background-color: #9c27b0;
-}
-
-.cluster-icon:nth-child(6) {
-    background-color: #e91e63;
-}
-
-.cluster-icon:nth-child(7) {
-    background-color: #111;
-}
 
 /* Section 7: Wavy Cards */
 
 .wavy-cards {
     width: 100%;
     padding: 120px 20px;
-    background: #fafafa;
+    background: var(--color-surface-alt);
     overflow: hidden;
 }
 
@@ -1008,8 +901,8 @@ html.lenis body {
 }
 
 .wavy-card {
-    border-radius: 24px;
-    background-color: #eaeaea;
+    border-radius: var(--radius-card-lg);
+    background-color: var(--color-border-light);
     flex-shrink: 0;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     overflow: hidden;
@@ -1026,7 +919,7 @@ html.lenis body {
 }
 
 .wavy-card:nth-child(3n) {
-    background-color: #f0f0f0;
+    background-color: var(--color-placeholder-alt);
 }
 
 .ph-medium {
@@ -1048,10 +941,10 @@ html.lenis body {
 }
 
 .wavy-cards-title {
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 1rem + 2.67vw, 3rem);
     font-weight: 600;
     line-height: 1.1;
-    color: #111;
+    color: var(--color-ink);
     margin-bottom: 20px;
     letter-spacing: -0.04em;
 }
@@ -1064,7 +957,7 @@ html.lenis body {
 .storytelling {
     width: 100%;
     padding: 120px 20px;
-    background: #fafafa;
+    background: var(--color-surface-alt);
 }
 
 .storytelling-container {
@@ -1077,19 +970,19 @@ html.lenis body {
     font-size: 0.9rem;
     font-weight: 700;
     letter-spacing: 0.15em;
-    color: #111;
+    color: var(--color-ink);
     margin-bottom: 20px;
     text-transform: uppercase;
 }
 
 .storytelling-header .text-blue {
-    color: #0044ff;
+    color: var(--color-blue-bright);
 }
 
 .storytelling-title {
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 1rem + 2.67vw, 3rem);
     font-weight: 600;
-    color: #111;
+    color: var(--color-ink);
     line-height: 1.1;
     letter-spacing: -0.04em;
     margin-bottom: 80px;
@@ -1103,7 +996,7 @@ html.lenis body {
 
 .story-card {
     flex: 1;
-    border-radius: 24px;
+    border-radius: var(--radius-card-lg);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
     overflow: hidden;
     text-align: left;
@@ -1130,7 +1023,7 @@ html.lenis body {
     gap: 8px;
     font-size: 0.95rem;
     font-weight: 600;
-    color: #111;
+    color: var(--color-ink);
     cursor: pointer;
 }
 
@@ -1140,7 +1033,7 @@ html.lenis body {
     align-items: center;
     width: 24px;
     height: 24px;
-    background: #111;
+    background: var(--color-ink);
     color: white;
     border-radius: 50%;
     font-size: 0.6rem;
@@ -1148,10 +1041,10 @@ html.lenis body {
 }
 
 .author-blue {
-    background: #0044ff;
+    background: var(--color-blue-bright);
     color: white;
     padding: 8px 20px;
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     font-size: 0.95rem;
     font-weight: 600;
     position: relative;
@@ -1164,7 +1057,7 @@ html.lenis body {
     left: 20px;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 8px solid #0044ff;
+    border-top: 8px solid var(--color-blue-bright);
 }
 
 .card-info {
@@ -1179,32 +1072,32 @@ html.lenis body {
 .card-info h3 {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #111;
+    color: var(--color-ink);
     margin-bottom: 10px;
     letter-spacing: -0.02em;
 }
 
 .card-info p {
     font-size: 0.95rem;
-    color: #555;
+    color: var(--color-muted);
     line-height: 1.5;
     margin-bottom: 24px;
 }
 
 .card-pill-btn {
     padding: 10px 24px;
-    border-radius: 30px;
-    border: 1px solid #d4d4d4;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border-dim);
     background: transparent;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #111;
+    color: var(--color-ink);
     cursor: pointer;
     transition: background 0.2s;
 }
 
 .card-pill-btn:hover {
-    background: #f0f0f0;
+    background: var(--color-placeholder-alt);
 }
 
 .card-mixed {
@@ -1218,7 +1111,7 @@ html.lenis body {
 .market {
     width: 100%;
     padding: 120px 20px;
-    background: #fff;
+    background: var(--color-white);
 }
 
 .market-container {
@@ -1248,15 +1141,15 @@ html.lenis body {
 }
 
 .market-header .text-purple {
-    color: #bf40ff;
+    color: var(--color-purple);
 }
 
 .market-title {
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 1rem + 2.67vw, 3rem);
     line-height: 1.08;
     font-weight: 600;
     letter-spacing: -.04em;
-    color: #111;
+    color: var(--color-ink);
     margin-bottom: 28px;
 }
 
@@ -1269,7 +1162,7 @@ html.lenis body {
 
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #555;
+    color: var(--color-muted);
     font-weight: 500;
 }
 
@@ -1308,7 +1201,7 @@ html.lenis body {
     aspect-ratio: 4/5;
 
     background: #ececec;
-    border-radius: 24px;
+    border-radius: var(--radius-card-lg);
 
     overflow: hidden;
     position: relative;
@@ -1335,7 +1228,7 @@ html.lenis body {
 
     font-size: 1.15rem;
     font-weight: 600;
-    color: #111;
+    color: var(--color-ink);
 }
 
 /*--------------------
@@ -1352,7 +1245,7 @@ html.lenis body {
 
     border-radius: 50px;
 
-    background: #111;
+    background: var(--color-ink);
 
     transition: transform .35s ease;
 }
@@ -1361,7 +1254,7 @@ html.lenis body {
     TABLET
 --------------------*/
 
-@media (max-width: 991px) {
+@media (max-width: 992px) {
 
     .market {
         padding: 90px 20px;
@@ -1387,10 +1280,6 @@ html.lenis body {
         padding: 70px 18px;
     }
 
-    .market-title {
-        font-size: 2.5rem;
-    }
-
     .market-para {
         font-size: 1rem;
     }
@@ -1401,19 +1290,47 @@ html.lenis body {
 
     .market-cards {
         gap: 18px;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 20px;
     }
 
     .mp-card {
         flex: 0 0 220px;
+        scroll-snap-align: center;
     }
 
+    .mp-img-placeholder {
+        aspect-ratio: 1/1;
+    }
+
+    .mp-img-placeholder img {
+        object-fit: cover;
+    }
+
+    .market-pagination {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .market-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-border-dim);
+        transition: background 0.3s, width 0.3s;
+    }
+
+    .market-dot.active {
+        background: var(--color-blue-bright);
+        width: 22px;
+        border-radius: 4px;
+    }
 }
 
 @media (max-width: 480px) {
-
-    .market-title {
-        font-size: 2rem;
-    }
 
     .mp-card {
         flex: 0 0 190px;
@@ -1425,7 +1342,7 @@ html.lenis body {
 .shrink-section {
     width: 100%;
     height: 100vh;
-    background: #fdfdfd;
+    background: var(--color-off-white);
     position: relative;
 }
 
@@ -1433,6 +1350,13 @@ html.lenis body {
     width: 100%;
     height: 100%;
     position: relative;
+}
+
+@media (min-width: 1600px) {
+    .shrink-section-container {
+        max-width: 1500px;
+        margin: 0 auto;
+    }
 }
 
 .animation-wrapper {
@@ -1446,8 +1370,8 @@ html.lenis body {
 .shrink-section .card {
     position: absolute;
     width: 15%;
-    background: #eaeaea;
-    border-radius: 20px;
+    background: var(--color-border-light);
+    border-radius: var(--radius-card);
     overflow: hidden;
     object-fit: contain;
 }
@@ -1467,7 +1391,7 @@ html.lenis body {
     max-width: 1200px;
     height: 100%;
     background: #d0d0d0;
-    border-radius: 24px;
+    border-radius: var(--radius-card-lg);
     z-index: 10;
     overflow: hidden;
 }
@@ -1526,8 +1450,7 @@ html.lenis body {
 .shrink-section .card.shrink-c5 img,
 .shrink-section .card.shrink-c8 img,
 .shrink-section .card.shrink-c9 img,
-.shrink-section .card.shrink-c10 img,
-.shrink-section .card.shrink-c5 img {
+.shrink-section .card.shrink-c10 img {
     object-fit: cover;
     object-position: center;
 }
@@ -1549,6 +1472,7 @@ html.lenis body {
 .shrink-c8 {
     left: 62%;
     top: 8vh;
+    width: 20%;
     height: 25vh;
     transform: perspective(1200px) rotateY(-10deg);
 }
@@ -1556,6 +1480,7 @@ html.lenis body {
 .shrink-c9 {
     left: 62%;
     top: 37vh;
+    width: 20%;
     height: 25vh;
     transform: perspective(1200px) rotateY(-10deg);
 }
@@ -1563,6 +1488,7 @@ html.lenis body {
 .shrink-c10 {
     left: 62%;
     top: 66vh;
+    width: 20%;
     height: 25vh;
     transform: perspective(1200px) rotateY(-10deg);
 }
@@ -1586,7 +1512,7 @@ html.lenis body {
 .grid {
     width: 100%;
     padding: 120px 20px;
-    background: #fff;
+    background: var(--color-white);
 }
 
 .grid-container {
@@ -1601,7 +1527,7 @@ html.lenis body {
     width: 100%;
     height: 600px;
     background: #f5efeb;
-    border-radius: 30px;
+    border-radius: var(--radius-pill);
     position: relative;
     overflow: hidden;
     padding: 30px;
@@ -1640,12 +1566,23 @@ html.lenis body {
     margin-left: -20px;
     margin-top: 10px;
     width: max-content;
+    animation: scroll-lgt-marquee 10s linear infinite;
+}
+
+@keyframes scroll-lgt-marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .lgt-word {
     font-size: 5.5rem;
     font-weight: 500;
-    color: #111;
+    color: var(--color-ink);
     letter-spacing: -0.05em;
     line-height: 1;
 }
@@ -1685,6 +1622,7 @@ html.lenis body {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    background-color: transparent;
 }
 
 .c1 {
@@ -1755,7 +1693,7 @@ html.lenis body {
 .grid-left,
 .grid-right {
     flex: 1;
-    border-radius: 30px;
+    border-radius: var(--radius-pill);
     position: relative;
     overflow: hidden;
     min-height: 600px;
@@ -1783,7 +1721,7 @@ html.lenis body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.45);
-    border-radius: 30px;
+    border-radius: var(--radius-pill);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
 }
 
@@ -1820,29 +1758,29 @@ html.lenis body {
     margin-top: 15px;
 }
 
-.form-group {
+.contact-form .form-group {
     width: 100%;
 }
 
-.form-group label {
+.contact-form .form-group label {
     display: block;
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 8px;
 }
 
-.form-group label span {
-    color: #fff;
+.contact-form .form-group label span {
+    color: var(--color-white);
 }
 
-.form-group input,
-.form-group textarea {
+.contact-form .form-group input,
+.contact-form .form-group textarea {
     width: 100%;
     padding: 16px 18px;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.08);
-    color: #fff;
+    color: var(--color-white);
     font-size: 0.95rem;
     font-family: inherit;
     outline: none;
@@ -1851,18 +1789,18 @@ html.lenis body {
     box-sizing: border-box;
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
+.contact-form .form-group input::placeholder,
+.contact-form .form-group textarea::placeholder {
     color: rgba(255, 255, 255, .65);
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.contact-form .form-group input:focus,
+.contact-form .form-group textarea:focus {
     border-color: rgba(255, 255, 255, .6);
     background: rgba(255, 255, 255, .12);
 }
 
-.form-group textarea {
+.contact-form .form-group textarea {
     min-height: 130px;
 }
 
@@ -1887,8 +1825,8 @@ html.lenis body {
 }
 
 .gr-icon {
-    background: #f0f0f0;
-    color: #111;
+    background: var(--color-placeholder-alt);
+    color: var(--color-ink);
 }
 
 
@@ -1908,43 +1846,21 @@ html.lenis body {
     line-height: 1.6;
     margin-bottom: 40px;
     opacity: 0.9;
-}
-
-.grid-right-para {
-    color: #555;
+    color: var(--color-muted);
 }
 
 .Meet,
 .Archives {
+    /* padding/border-radius/font-size/font-weight/border/cursor/transition
+       are fully restated by the shimmer-button block further down and were
+       dead weight here; width is the only property that actually survives. */
     width: fit-content;
-    padding: 14px 32px;
-    border-radius: 30px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.Meet {
-    background: white;
-    color: #111;
-}
-
-.Archives {
-    background: #111;
-    color: white;
-}
-
-.Meet:hover,
-.Archives:hover {
-    transform: translateY(-2px);
 }
 
 .card-visual-placeholder {
     width: 100%;
     height: 300px;
-    background: #eaeaea;
+    background: var(--color-border-light);
     border-radius: 16px;
     margin: 20px 0;
     overflow: hidden;
@@ -1962,7 +1878,7 @@ html.lenis body {
 .card-blue-placeholder {
     width: 100%;
     height: 350px;
-    background: #eaeaea;
+    background: var(--color-border-light);
     overflow: hidden;
     position: relative;
 }
@@ -1979,45 +1895,10 @@ html.lenis body {
     margin-top: 80px;
 }
 
-.marketplace {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    overflow: visible;
-}
-
-.marketplace-container {
-    max-width: 900px;
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-    padding: 0 20px;
-    text-align: center;
-}
-
-.marketplace-title {
-    font-size: 2.8rem;
-    font-weight: 500;
-    line-height: 1.3;
-    color: #111;
-    letter-spacing: -0.02em;
-    position: relative;
-    z-index: 1;
-    opacity: 1;
-}
-
 .folder {
     width: 100%;
     padding: 100px 20px;
-    background: #fff;
-}
-
-.lgt-circle {
-    background-color: transparent;
+    background: var(--color-white);
 }
 
 .lgt-circle img {
@@ -2039,7 +1920,7 @@ html.lenis body {
     display: block;
     width: 25px;
     height: 3px;
-    background-color: #111;
+    background-color: var(--color-ink);
     border-radius: 3px;
     transition: all 0.3s ease-in-out;
 }
@@ -2093,7 +1974,7 @@ html.lenis body {
 
 .mobile-nav-links .nav-link {
     font-size: 2rem;
-    color: #111;
+    color: var(--color-ink);
     text-decoration: none;
     font-weight: 500;
 }
@@ -2101,7 +1982,7 @@ html.lenis body {
 /* Footer */
 .Footer {
     width: 100%;
-    background-color: #fff;
+    background-color: var(--color-white);
     padding: 40px 20px;
     border-top: 1px solid #D3D3D3;
 }
@@ -2117,23 +1998,22 @@ html.lenis body {
 .footer-left {
     font-size: 0.95rem;
     font-weight: 500;
-    color: #000;
+    color: var(--color-black);
     letter-spacing: 0.02em;
 }
 
 @media (max-width: 992px) {
 
-    .hero-title,
-    .diagonal-title,
-    .gateway-title,
-    .wavy-cards-title,
-    .storytelling-title,
-    .market-title {
+    .marquee-title {
         font-size: 2.2rem;
     }
 
     .gateway-img-wrapper {
         height: 350px;
+    }
+
+    .diagonal-card {
+        display: none !important;
     }
 
     .diagonal-card-container {
@@ -2175,15 +2055,6 @@ html.lenis body {
 
 @media (max-width: 768px) {
 
-    .hero-title,
-    .diagonal-title,
-    .gateway-title,
-    .wavy-cards-title,
-    .storytelling-title,
-    .market-title {
-        font-size: 1.8rem;
-    }
-
     .nav-links {
         display: none;
     }
@@ -2216,6 +2087,11 @@ html.lenis body {
         display: none;
     }
 
+    .gateway {
+        padding-top: 100px;
+        margin-top: 80px;
+    }
+
     .gateway-header {
         flex-direction: column;
         align-items: flex-start;
@@ -2223,17 +2099,16 @@ html.lenis body {
     }
 
     .gateway-img-wrapper {
-        height: 250px;
+        height: 200px;
+    }
+
+    .carousel-slide {
+        object-fit: contain;
     }
 
 
     .gateway-bottom-right {
-        transform: scale(0.8);
-    }
-
-    .gateway-bottom-right {
-        bottom: 20px;
-        right: 20px;
+        display: none;
     }
 
     .ph-medium {
@@ -2280,6 +2155,27 @@ html.lenis body {
         flex-direction: column;
     }
 
+    .marquee-track {
+        gap: 30px;
+    }
+
+    .logo-item {
+        font-size: 1rem;
+    }
+
+    .mp-text {
+        font-size: 1.1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        padding: 0 10px;
+    }
+
+    .marketplace {
+        min-height: auto;
+        height: auto;
+        padding: 60px 20px 40px 20px;
+    }
+
     .large-grid-top {
         height: 380px;
         padding: 40px 20px;
@@ -2294,6 +2190,15 @@ html.lenis body {
         height: 55px;
     }
 
+    .ph-medium {
+        width: 60px;
+        height: 60px;
+    }
+
+    .wavy-card {
+        border-radius: 14px;
+    }
+
     .grid-bottom {
         flex-direction: column;
         height: auto;
@@ -2302,11 +2207,16 @@ html.lenis body {
     .grid-left,
     .grid-right {
         width: 100%;
-        height: 350px;
+        height: auto;
+        min-height: auto;
     }
 
     .grid-content {
         padding: 30px 25px;
+    }
+
+    .g-icon {
+        display: none;
     }
 
     .grid-left-title,
@@ -2321,8 +2231,18 @@ html.lenis body {
         margin-bottom: 15px;
     }
 
-    .lgt-marquee {
-        font-size: 2rem;
+    .lgt-word {
+        font-size: 2.5rem;
+    }
+
+    .lgt-sq {
+        width: 30px;
+        height: 30px;
+    }
+
+    .lgt-img-ph {
+        width: 36px;
+        height: 48px;
     }
 }
 
@@ -2348,99 +2268,93 @@ html.lenis body {
 
 
 .Meet,
+.card-pill-btn,
+.Archives {
+    font-weight: 500;
+    padding: 14px 32px;
+    border-radius: var(--radius-pill);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.Meet,
 .card-pill-btn {
-    background: #fdfdfd !important;
-    color: #111 !important;
-    font-weight: 500 !important;
-    padding: 14px 32px !important;
-    border-radius: 30px !important;
-    border: 1px solid rgba(0, 0, 0, 0.9) !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03) !important;
-    font-size: 0.95rem !important;
-    cursor: pointer !important;
-    transition: transform 0.2s !important;
-    position: relative !important;
-    overflow: hidden !important;
-    isolation: isolate !important;
+    background: var(--color-off-white);
+    color: var(--color-ink);
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    isolation: isolate;
 }
 
 .Meet:hover,
-.card-pill-btn:hover {
-    transform: translateY(-2px) !important;
+.card-pill-btn:hover,
+.Archives:hover {
+    transform: translateY(-2px);
 }
 
 .Meet::before,
 .card-pill-btn::before {
-    content: "" !important;
-    position: absolute !important;
-    inset: 0 !important;
-    border-radius: inherit !important;
-    padding: 2px !important;
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
     background: linear-gradient(90deg,
             transparent,
-            #2563eb,
-            transparent) !important;
+            var(--color-blue-link),
+            transparent);
 
     -webkit-mask:
-        linear-gradient(#fff, #fff) content-box,
-        linear-gradient(#fff, #fff) !important;
+        linear-gradient(var(--color-white), var(--color-white)) content-box,
+        linear-gradient(var(--color-white), var(--color-white));
     mask:
-        linear-gradient(#fff, #fff) content-box,
-        linear-gradient(#fff, #fff) !important;
-    -webkit-mask-composite: xor !important;
-    mask-composite: exclude !important;
+        linear-gradient(var(--color-white), var(--color-white)) content-box,
+        linear-gradient(var(--color-white), var(--color-white));
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
 
-    transform: translateX(-100%) !important;
-    transition: transform .7s ease !important;
-    pointer-events: none !important;
+    transform: translateX(-100%);
+    transition: transform .7s ease;
+    pointer-events: none;
 }
 
 .Meet:hover::before,
 .card-pill-btn:hover::before {
-    transform: translateX(100%) !important;
+    transform: translateX(100%);
 }
 
 
 .Archives {
-    background: #111 !important;
-    color: white !important;
-    font-weight: 500 !important;
-    padding: 14px 32px !important;
-    border-radius: 30px !important;
-    border: none !important;
-    font-size: 0.95rem !important;
-    cursor: pointer !important;
-    transition: transform 0.2s !important;
-    position: relative !important;
-    overflow: hidden !important;
+    background: var(--color-ink);
+    color: white;
+    border: none;
 }
 
 .Archives::after {
-    content: "" !important;
-    position: absolute !important;
-    top: -60% !important;
-    left: -50% !important;
-    width: 60% !important;
-    height: 220% !important;
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -50%;
+    width: 60%;
+    height: 220%;
     background: linear-gradient(90deg,
             transparent 0%,
             rgba(255, 255, 255, 0.15) 35%,
             rgba(255, 255, 255, 0.9) 50%,
             rgba(255, 255, 255, 0.15) 65%,
-            transparent 100%) !important;
-    filter: blur(24px) !important;
-    opacity: 0.9 !important;
-    transform: translateX(-220%) !important;
-    transition: transform 1.2s cubic-bezier(.22, 1, .36, 1) !important;
-    pointer-events: none !important;
-}
-
-.Archives:hover {
-    transform: translateY(-2px) !important;
+            transparent 100%);
+    filter: blur(24px);
+    opacity: 0.9;
+    transform: translateX(-220%);
+    transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);
+    pointer-events: none;
 }
 
 .Archives:hover::after {
-    transform: translateX(420%) !important;
+    transform: translateX(420%);
 }
 
 /* ================= QUOTE MODAL ================= */
@@ -2467,9 +2381,9 @@ html.lenis body {
 }
 
 .quote-modal-content {
-    background: #0d0f14;
+    background: var(--color-white);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     padding: 40px;
     width: 90%;
     max-width: 500px;
@@ -2487,7 +2401,7 @@ html.lenis body {
     position: absolute;
     top: 20px;
     right: 25px;
-    color: #94a3b8;
+    color: var(--color-muted);
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
@@ -2495,18 +2409,18 @@ html.lenis body {
 }
 
 .quote-close-btn:hover {
-    color: #fff;
+    color: var(--color-black);
 }
 
 .quote-modal-title {
-    color: #fff;
+    color: var(--color-ink);
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 8px;
 }
 
 .quote-modal-subtitle {
-    color: #94a3b8;
+    color: var(--color-muted);
     font-size: 14px;
     margin-bottom: 30px;
 }
@@ -2522,55 +2436,55 @@ html.lenis body {
     gap: 15px;
 }
 
-.form-row .form-group {
+.quote-form .form-row .form-group {
     flex: 1;
 }
 
-.form-group {
+.quote-form .form-group {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
 
-.form-group label {
-    color: #fff;
+.quote-form .form-group label {
+    color: #333;
     font-size: 13px;
     font-weight: 500;
 }
 
-.form-group input,
-.form-group textarea {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.quote-form .form-group input,
+.quote-form .form-group textarea {
+    background: #f9f9f9;
+    border: 1px solid #ccc;
     border-radius: 8px;
     padding: 12px 15px;
-    color: #fff;
+    color: var(--color-ink);
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     outline: none;
     transition: border-color 0.2s, background 0.2s;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: #6366f1;
-    background: rgba(255, 255, 255, 0.08);
+.quote-form .form-group input:focus,
+.quote-form .form-group textarea:focus {
+    border-color: var(--accent);
+    background: var(--color-white);
 }
 
-.form-group textarea {
+.quote-form .form-group textarea {
     resize: vertical;
     min-height: 100px;
 }
 
 .error-msg {
-    color: #ef4444;
+    color: var(--color-danger);
     font-size: 12px;
     display: none;
 }
 
 .quote-submit-btn {
-    background: #6366f1;
-    color: #fff;
+    background: var(--color-ink);
+    color: var(--color-white);
     border: none;
     border-radius: 8px;
     padding: 14px;
@@ -2585,11 +2499,11 @@ html.lenis body {
 }
 
 .quote-submit-btn:hover {
-    background: #4f46e5;
+    background: var(--color-ink-soft);
 }
 
 .quote-submit-btn:disabled {
-    background: #4338ca;
+    background: var(--color-muted);
     cursor: not-allowed;
     opacity: 0.7;
 }
@@ -2597,7 +2511,7 @@ html.lenis body {
 .success-msg {
     background: rgba(16, 185, 129, 0.1);
     border: 1px solid rgba(16, 185, 129, 0.2);
-    color: #10b981;
+    color: var(--color-success);
     padding: 12px;
     border-radius: 8px;
     font-size: 14px;
@@ -2634,242 +2548,154 @@ html.lenis body {
     will-change: transform;
 }
 
-.top-track .wavy-card:nth-child(1) {
-    animation-delay: 0s;
-}
-
+/* Consolidated: .top-track and .bottom-track always used identical
+   per-index delays, so each pair is now a single rule instead of two. */
+.top-track .wavy-card:nth-child(1),
 .bottom-track .wavy-card:nth-child(1) {
     animation-delay: 0s;
 }
 
-.top-track .wavy-card:nth-child(2) {
-    animation-delay: -0.3s;
-}
-
+.top-track .wavy-card:nth-child(2),
 .bottom-track .wavy-card:nth-child(2) {
     animation-delay: -0.3s;
 }
 
-.top-track .wavy-card:nth-child(3) {
-    animation-delay: -0.6s;
-}
-
+.top-track .wavy-card:nth-child(3),
 .bottom-track .wavy-card:nth-child(3) {
     animation-delay: -0.6s;
 }
 
-.top-track .wavy-card:nth-child(4) {
-    animation-delay: -0.9s;
-}
-
+.top-track .wavy-card:nth-child(4),
 .bottom-track .wavy-card:nth-child(4) {
     animation-delay: -0.9s;
 }
 
-.top-track .wavy-card:nth-child(5) {
-    animation-delay: -1.2s;
-}
-
+.top-track .wavy-card:nth-child(5),
 .bottom-track .wavy-card:nth-child(5) {
     animation-delay: -1.2s;
 }
 
-.top-track .wavy-card:nth-child(6) {
-    animation-delay: -1.5s;
-}
-
+.top-track .wavy-card:nth-child(6),
 .bottom-track .wavy-card:nth-child(6) {
     animation-delay: -1.5s;
 }
 
-.top-track .wavy-card:nth-child(7) {
-    animation-delay: -1.8s;
-}
-
+.top-track .wavy-card:nth-child(7),
 .bottom-track .wavy-card:nth-child(7) {
     animation-delay: -1.8s;
 }
 
-.top-track .wavy-card:nth-child(8) {
-    animation-delay: -2.1s;
-}
-
+.top-track .wavy-card:nth-child(8),
 .bottom-track .wavy-card:nth-child(8) {
     animation-delay: -2.1s;
 }
 
-.top-track .wavy-card:nth-child(9) {
-    animation-delay: -2.4s;
-}
-
+.top-track .wavy-card:nth-child(9),
 .bottom-track .wavy-card:nth-child(9) {
     animation-delay: -2.4s;
 }
 
-.top-track .wavy-card:nth-child(10) {
-    animation-delay: -2.7s;
-}
-
+.top-track .wavy-card:nth-child(10),
 .bottom-track .wavy-card:nth-child(10) {
     animation-delay: -2.7s;
 }
 
-.top-track .wavy-card:nth-child(11) {
-    animation-delay: -3s;
-}
-
+.top-track .wavy-card:nth-child(11),
 .bottom-track .wavy-card:nth-child(11) {
     animation-delay: -3s;
 }
 
-.top-track .wavy-card:nth-child(12) {
-    animation-delay: -3.3s;
-}
-
+.top-track .wavy-card:nth-child(12),
 .bottom-track .wavy-card:nth-child(12) {
     animation-delay: -3.3s;
 }
 
-.top-track .wavy-card:nth-child(13) {
-    animation-delay: -3.6s;
-}
-
+.top-track .wavy-card:nth-child(13),
 .bottom-track .wavy-card:nth-child(13) {
     animation-delay: -3.6s;
 }
 
-.top-track .wavy-card:nth-child(14) {
-    animation-delay: -3.9s;
-}
-
+.top-track .wavy-card:nth-child(14),
 .bottom-track .wavy-card:nth-child(14) {
     animation-delay: -3.9s;
 }
 
-.top-track .wavy-card:nth-child(15) {
-    animation-delay: -4.2s;
-}
-
+.top-track .wavy-card:nth-child(15),
 .bottom-track .wavy-card:nth-child(15) {
     animation-delay: -4.2s;
 }
 
-.top-track .wavy-card:nth-child(16) {
-    animation-delay: -4.5s;
-}
-
+.top-track .wavy-card:nth-child(16),
 .bottom-track .wavy-card:nth-child(16) {
     animation-delay: -4.5s;
 }
 
-.top-track .wavy-card:nth-child(17) {
-    animation-delay: -4.8s;
-}
-
+.top-track .wavy-card:nth-child(17),
 .bottom-track .wavy-card:nth-child(17) {
     animation-delay: -4.8s;
 }
 
-.top-track .wavy-card:nth-child(18) {
-    animation-delay: -5.1s;
-}
-
+.top-track .wavy-card:nth-child(18),
 .bottom-track .wavy-card:nth-child(18) {
     animation-delay: -5.1s;
 }
 
-.top-track .wavy-card:nth-child(19) {
-    animation-delay: -5.4s;
-}
-
+.top-track .wavy-card:nth-child(19),
 .bottom-track .wavy-card:nth-child(19) {
     animation-delay: -5.4s;
 }
 
-.top-track .wavy-card:nth-child(20) {
-    animation-delay: -5.7s;
-}
-
+.top-track .wavy-card:nth-child(20),
 .bottom-track .wavy-card:nth-child(20) {
     animation-delay: -5.7s;
 }
 
-.top-track .wavy-card:nth-child(21) {
-    animation-delay: -6s;
-}
-
+.top-track .wavy-card:nth-child(21),
 .bottom-track .wavy-card:nth-child(21) {
     animation-delay: -6s;
 }
 
-.top-track .wavy-card:nth-child(22) {
-    animation-delay: -6.3s;
-}
-
+.top-track .wavy-card:nth-child(22),
 .bottom-track .wavy-card:nth-child(22) {
     animation-delay: -6.3s;
 }
 
-.top-track .wavy-card:nth-child(23) {
-    animation-delay: -6.6s;
-}
-
+.top-track .wavy-card:nth-child(23),
 .bottom-track .wavy-card:nth-child(23) {
     animation-delay: -6.6s;
 }
 
-.top-track .wavy-card:nth-child(24) {
-    animation-delay: -6.9s;
-}
-
+.top-track .wavy-card:nth-child(24),
 .bottom-track .wavy-card:nth-child(24) {
     animation-delay: -6.9s;
 }
 
-.top-track .wavy-card:nth-child(25) {
-    animation-delay: -7.2s;
-}
-
+.top-track .wavy-card:nth-child(25),
 .bottom-track .wavy-card:nth-child(25) {
     animation-delay: -7.2s;
 }
 
-.top-track .wavy-card:nth-child(26) {
-    animation-delay: -7.5s;
-}
-
+.top-track .wavy-card:nth-child(26),
 .bottom-track .wavy-card:nth-child(26) {
     animation-delay: -7.5s;
 }
 
-.top-track .wavy-card:nth-child(27) {
-    animation-delay: -7.8s;
-}
-
+.top-track .wavy-card:nth-child(27),
 .bottom-track .wavy-card:nth-child(27) {
     animation-delay: -7.8s;
 }
 
-.top-track .wavy-card:nth-child(28) {
-    animation-delay: -8.1s;
-}
-
+.top-track .wavy-card:nth-child(28),
 .bottom-track .wavy-card:nth-child(28) {
     animation-delay: -8.1s;
 }
 
-.top-track .wavy-card:nth-child(29) {
-    animation-delay: -8.4s;
-}
-
+.top-track .wavy-card:nth-child(29),
 .bottom-track .wavy-card:nth-child(29) {
     animation-delay: -8.4s;
 }
 
-.top-track .wavy-card:nth-child(30) {
-    animation-delay: -8.7s;
-}
-
+.top-track .wavy-card:nth-child(30),
 .bottom-track .wavy-card:nth-child(30) {
     animation-delay: -8.7s;
 }
@@ -2894,3 +2720,74 @@ html.lenis body {
 .lenis.lenis-scrolling iframe {
     pointer-events: none;
 }
+
+/* ============================================================
+   NEW — mobile swiper behaviour
+   ============================================================ */
+@media (max-width: 768px) {
+    .storytelling {
+        padding: 60px 0;
+    }
+
+    .storytelling-container {
+        padding: 0 20px;
+    }
+
+    .storytelling-title {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
+    .story-cards {
+        display: flex;
+        grid-template-columns: none;
+        gap: 16px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scroll-padding-left: 20px;
+        margin: 0 -20px;
+        padding: 4px 20px 12px;
+        scrollbar-width: none;
+    }
+
+    .story-cards::-webkit-scrollbar {
+        display: none;
+    }
+
+    .story-card {
+        flex: 0 0 86%;
+        scroll-snap-align: center;
+    }
+}
+
+.swiper-dots {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+}
+@media (max-width: 768px) {
+    .swiper-dots {
+        display: flex;
+    }
+}
+.swiper-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-border-dim);
+    transition: background 0.2s, width 0.2s;
+    cursor: pointer;
+}
+.swiper-dot.active {
+    background: var(--color-blue-bright);
+    width: 22px;
+    border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html.low-power-scroll {
+        scroll-behavior: smooth;
+    }
+}

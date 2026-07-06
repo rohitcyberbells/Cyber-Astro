@@ -1,18 +1,10 @@
-/* ==========================================================================
-   SCROLL ENGINE + SECTIONS 1 & 2 — rebuilt
-   Replaces: original lines ~1-462 (Lenis setup, hero protection, hero intro,
-   scrollMaster, bindHeroProtectionZone, Mac Fanout Fix).
-   Sections 3+ (gateway, marquee, physics, carousel, quote form) are untouched
-   and should stay below this block, unmodified.
-   ========================================================================== */
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 
 function debounce(func, wait) {
   let timeout;
-  return function(...args) {
+  return function (...args) {
     clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
@@ -27,12 +19,7 @@ if ('scrollRestoration' in history) {
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ==========================================================================
-   1. ENVIRONMENT DETECTION
-   One pass, done once. Everything downstream reads from these flags instead
-   of re-sniffing UA strings in five different places.
-   ========================================================================== */
-
+// ENVIRONMENT DETECTION
 const isDesktop = window.matchMedia('(min-width: 769px)').matches;
 
 const platformStr = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent;
@@ -53,17 +40,11 @@ const hasNativeMomentum = isMacOS || isSafari;
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/**
- * Rough device tier, used to gate expensive work (particle wave, physics,
- * scrub-heavy timelines). Deliberately conservative: `deviceMemory` and
- * `connection.saveData` aren't available in Safari, so we never rely on them
- * alone — hardwareConcurrency is the one signal available everywhere.
- */
 function detectDeviceTier() {
   if (prefersReducedMotion) return 'reduced';
 
   const cores = navigator.hardwareConcurrency || 4;
-  const mem = navigator.deviceMemory; // undefined on Safari — treated as "unknown", not "high"
+  const mem = navigator.deviceMemory;
   const saveData = navigator.connection?.saveData;
 
   if (saveData) return 'low';
@@ -73,35 +54,15 @@ function detectDeviceTier() {
 }
 
 const deviceTier = detectDeviceTier();
-const lowPowerMode = false; // Temporarily disabled for testing (was: deviceTier === 'low' || deviceTier === 'reduced')
-
-/* ==========================================================================
-   2. LENIS
-   Runs on ALL desktop platforms now, including Mac/Safari — tuned down
-   rather than switched off. This is what lets us delete the old
-   "Mac Fanout Fix" hack entirely: with Lenis buffering scroll uniformly,
-   raw window.scrollY never leaks into the scrub timelines, on any platform.
-
-   On low-power / reduced-motion devices we skip Lenis altogether and let
-   native scroll handle everything — Lenis's own RAF loop is not free, and
-   ScrollTrigger works correctly against native scroll with zero setup.
-   ========================================================================== */
 
 let lenis = null;
 
-if (isDesktop && !lowPowerMode) {
+if (isDesktop) {
   lenis = new Lenis({
-    // Mac/Safari trackpads already have OS-level inertia. Stacking Lenis's
-    // own lerp-smoothing on top of that produces the classic "double
-    // smoothing" laggy feel — so momentum platforms get a lighter touch,
-    // not a bigger one.
     lerp: hasNativeMomentum ? 0.06 : 0.1,
     wheelMultiplier: hasNativeMomentum ? 0.7 : 1,
     touchMultiplier: 1.2,
     smoothWheel: true,
-    // Let touch input use native scroll rather than Lenis's synthetic path —
-    // this matters most on iPad-as-desktop, where syncTouch fighting Safari's
-    // own touch handling is a common source of jank/rubber-band glitches.
     syncTouch: false,
     orientation: 'vertical',
     gestureOrientation: 'vertical',
@@ -110,31 +71,11 @@ if (isDesktop && !lowPowerMode) {
 
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
-  // Fully disabling lag smoothing (threshold 0) removes GSAP's catch-up
-  // jump on backgrounded tabs, but on Safari specifically that can show up
-  // as a large scroll-position snap the instant the tab regains focus.
-  // Bounding it instead — absorb up to 500ms of drift instantly, then
-  // resume normal playback rather than fast-forwarding through it — avoids
-  // both failure modes. Test with your actual scrub durations; adjust the
-  // 500 if section 2's timeline is long enough that this still feels abrupt.
   gsap.ticker.lagSmoothing(500, 33);
-  lenis.stop(); // held until hero intro completes, see bottom of file
+  lenis.stop();
 }
 
 window.lenis = lenis;
-
-/*
-  Safari-specific note (apply in CSS, not JS):
-  Safari's elastic overscroll bounce at the top/bottom of the page can cause
-  visible jitter around pinned ScrollTrigger sections, because Safari
-  repaints fixed-position elements during the bounce. Add this once,
-  globally, in your stylesheet:
-
-    html, body { overscroll-behavior: none; }
-
-  This has nothing to do with Lenis directly, but without it, even a
-  perfectly-tuned Lenis config can look glitchy on Safari specifically.
-*/
 
 const SLOWED_MULTIPLIER = 0.25;
 const NORMAL_MULTIPLIER = 1;
@@ -145,10 +86,6 @@ let speedTween = null;
 if (lenis) {
   lenis.options.wheelMultiplier = SLOWED_MULTIPLIER;
   lenis.options.touchMultiplier = SLOWED_MULTIPLIER;
-  // Fallback only — some Lenis versions have VirtualScroll capture its own
-  // copy of these options at construction rather than reading `lenis.options`
-  // live. Verify against your installed version; if `lenis.options` alone
-  // works, delete these two lines.
   if (lenis.virtualScroll?.options) {
     lenis.virtualScroll.options.wheelMultiplier = SLOWED_MULTIPLIER;
     lenis.virtualScroll.options.touchMultiplier = SLOWED_MULTIPLIER;
@@ -173,12 +110,6 @@ function tweenLenisSpeed(to, duration, ease) {
   });
 }
 
-/* ==========================================================================
-   3. HERO PROTECTION (wheel compression)
-   Now correctly runs on Mac/Safari too, since Lenis is active there.
-   Previously this silently never ran on Mac because Lenis was null.
-   ========================================================================== */
-
 let heroProtectionActive = true;
 
 if (isDesktop && lenis) {
@@ -197,10 +128,6 @@ if (isDesktop && lenis) {
     let raw = e.deltaY;
     if (e.deltaMode === 1) raw *= LINE_HEIGHT;
     if (e.deltaMode === 2) raw *= window.innerHeight;
-
-    // Safari's momentum scroll occasionally fires isolated, unusually large
-    // deltaY spikes at the end of a fling. Clamp before compressing so one
-    // spike can't punch through the protection zone in a single tick.
     raw = gsap.utils.clamp(-4000, 4000, raw);
 
     if (heroProtectionActive) {
@@ -217,11 +144,6 @@ if (isDesktop && lenis) {
   window.addEventListener('wheel', onWheel, { capture: true, passive: true });
 }
 
-/* ==========================================================================
-   4. CARD STATE — single source of truth
-   Every phase of both sections reads from here. Change a fan position or a
-   deal offset once, and every timeline that uses it stays in sync.
-   ========================================================================== */
 
 const heroCards = gsap.utils.toArray('.hero-cards-wrapper .ph-card');
 
@@ -244,8 +166,6 @@ const dealOffsets = [
   { x: 320, y: 150, rotation: 0 },
   { x: 420, y: 200, rotation: 0 },
 ];
-
-// targetX/targetY are computed by calculateDeltas() below and mutated in place.
 const deal = { x: 0, y: 0 };
 
 const CARD_STATES = {
@@ -259,15 +179,10 @@ const CARD_STATES = {
 };
 
 const mm = gsap.matchMedia();
-
-/* ==========================================================================
-   5. SECTION 1 — HERO INTRO
-   ========================================================================== */
-
 function buildHeroIntro(onIntroComplete) {
   if (heroCards.length < 7) {
     onIntroComplete?.();
-    return () => {};
+    return () => { };
   }
 
   const hiddenCards = heroCards.slice(0, 6);
@@ -275,15 +190,12 @@ function buildHeroIntro(onIntroComplete) {
   const introText = gsap.utils.toArray('.hero-word, .hero-para, .hero-btn, .readmore-btn');
 
   gsap.set(introText, { y: 40, opacity: 0 });
-
-  // Reduced motion / low-power: skip straight to the end state, no animation,
-  // but still fire the completion callback so scrollMaster initializes.
   if (lowPowerMode) {
     gsap.set(hiddenCards, { ...CARD_STATES.stacked(), opacity: 1 });
     gsap.set(topCard, { ...CARD_STATES.stacked(), opacity: 1 });
     gsap.set(introText, { y: 0, opacity: 1 });
     onIntroComplete?.();
-    return () => {};
+    return () => { };
   }
 
   const introMm = gsap.matchMedia();
@@ -313,9 +225,6 @@ function buildHeroIntro(onIntroComplete) {
           )
           .call(() => onIntroComplete?.());
       } else {
-        // Mobile: still a real animation (settle-in), not a hard cut to
-        // end-state — a snap read as "we turned animation off," a short
-        // fade+drift reads as intentional restraint.
         const BASE_WIDTH = 768;
         const MIN_SCALE = 0.45;
 
@@ -531,12 +440,12 @@ function buildScrollMaster() {
    path instead of an isMacOS branch with a separate scroll-guard hack.
    ========================================================================== */
 
-let teardownHeroIntro = () => {};
-let teardownScrollMaster = () => {};
+let teardownHeroIntro = () => { };
+let teardownScrollMaster = () => { };
 
 teardownHeroIntro = buildHeroIntro(() => {
   teardownScrollMaster = buildScrollMaster();
-}) || (() => {});
+}) || (() => { });
 
 /**
  * Call this if the page ever needs to re-run this module from scratch
@@ -1180,7 +1089,7 @@ if (openQuoteModalBtn && quoteModal) {
     if (window.lenis) window.lenis.stop();
   });
 
-  closeQuoteBtn.addEventListener('click', () => {
+  closeQuoteBtn?.addEventListener('click', () => {
     quoteModal.classList.remove('show');
     if (window.lenis) window.lenis.start();
   });

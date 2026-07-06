@@ -20,14 +20,14 @@ import '../styles/global.css';
     <meta property="og:url" content="https://cyberbells.com/">
     <meta property="og:title" content="CyberBells | High-Quality Mobile Application Development">
     <meta property="og:description" content="CyberBells turns your app idea into reality. We design, develop, test, and publish your mobile app on the App Store and Google Play in as little as 90 days.">
-    <meta property="og:image" content="/assets/Logo/CyberLogo.png">
+    <meta property="og:image" content="https://cyberbells.com/assets/Logo/CyberLogo.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cyberbells.com/">
     <meta property="twitter:title" content="CyberBells | High-Quality Mobile Application Development">
     <meta property="twitter:description" content="CyberBells turns your app idea into reality. We design, develop, test, and publish your mobile app on the App Store and Google Play.">
-    <meta property="twitter:image" content="/assets/Logo/CyberLogo.png">
+    <meta property="twitter:image" content="https://cyberbells.com/assets/Logo/CyberLogo.png">
 
     <link rel="canonical" href="https://cyberbells.com/">
 
@@ -35,13 +35,17 @@ import '../styles/global.css';
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
+<meta property="og:site_name" content="CyberBells">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 
 <body>
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="assets/Logo/CyberLogo.png" alt="CyberLogo">
+                <img src="/assets/Logo/CyberLogo.png" alt="CyberLogo">
             </div>
             <div class="nav-links">
                 <a href="#" class="nav-link active">Solutions</a>
@@ -49,7 +53,7 @@ import '../styles/global.css';
                 <a href="#" class="nav-link">Process</a>
             </div>
         </div>
-        <div class="hamburger">
+        <div class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu" role="button" tabindex="0">
             <span></span>
             <span></span>
             <span></span>
@@ -78,13 +82,13 @@ import '../styles/global.css';
 
                 <div class="hero-cards-wrapper">
                     <div class="cards">
-                        <div class="card1 ph-card"><img src="assets/Images/Hero/flock.jpg" alt="Card 1" width="300" height="500" loading="lazy"></div>
-                        <div class="card2 ph-card"><img src="assets/Images/Hero/SafeGrow.jpg" alt="Card 2" width="300" height="500" loading="lazy"></div>
-                        <div class="card3 ph-card"><img src="assets/Images/Hero/Coffee.jpg" alt="Card 3" width="300" height="500" loading="lazy"></div>
-                        <div class="card4 ph-card"><img src="assets/Images/Hero/ugive.jpg" alt="Card 4" width="300" height="500" loading="lazy"></div>
-                        <div class="card5 ph-card"><img src="assets/Images/Hero/Browns.jpg" alt="Card 5" width="300" height="500" loading="lazy"></div>
-                        <div class="card6 ph-card"><img src="assets/Images/Hero/OnCoffee.png" alt="Card 6" width="300" height="500" loading="lazy"></div>
-                        <div class="card7 ph-card"><img src="assets/Images/Hero/Splash.jpg" alt="Card 7" width="300" height="500" fetchpriority="high"></div>
+                        <div class="card1 ph-card"><img src="/assets/Images/Hero/flock.jpg" alt="Flock App Interface" width="300" height="500" loading="lazy"></div>
+                        <div class="card2 ph-card"><img src="/assets/Images/Hero/SafeGrow.jpg" alt="SafeGrow Interface" width="300" height="500" loading="lazy"></div>
+                        <div class="card3 ph-card"><img src="/assets/Images/Hero/Coffee.jpg" alt="Coffee App UI" width="300" height="500" loading="lazy"></div>
+                        <div class="card4 ph-card"><img src="/assets/Images/Hero/ugive.jpg" alt="Ugive App Preview" width="300" height="500" loading="lazy"></div>
+                        <div class="card5 ph-card"><img src="/assets/Images/Hero/Browns.jpg" alt="Browns E-Commerce UI" width="300" height="500" loading="lazy"></div>
+                        <div class="card6 ph-card"><img src="/assets/Images/Hero/OnCoffee.png" alt="OnCoffee Delivery App" width="300" height="500" loading="lazy"></div>
+                        <div class="card7 ph-card"><img src="/assets/Images/Hero/Splash.jpg" alt="Splash Analytics Dashboard" width="300" height="500" fetchpriority="high"></div>
                     </div>
                 </div>
 
@@ -93,7 +97,7 @@ import '../styles/global.css';
 
                 <div class="hero-btn-wrapper">
                     <button class="hero-btn"
-                        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/cyberbells/new-meeting?hide_gdpr_banner=1&month=2026-07'});return false;">Book
+                        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/cyberbells/new-meeting?hide_gdpr_banner=1'});return false;">Book
                         Your Strategy Session</button>
                     <button class="readmore-btn" id="openQuoteModalBtn">Request Free Quote</button>
                 </div>
@@ -165,11 +169,11 @@ import '../styles/global.css';
 
             <div class="gateway-img-wrapper">
                 <div class="gateway-carousel">
-                    <img class="carousel-slide active" src="assets/Images/Banner images/Fintech.png" alt="Fintech">
-                    <img class="carousel-slide" src="assets/Images/Banner images/Logistics.png" alt="Logistics">
-                    <img class="carousel-slide" src="assets/Images/Banner images/Ecommerce.png" alt="Ecommerce">
-                    <img class="carousel-slide" src="assets/Images/Banner images/Management.png" alt="ManagementSystem">
-                    <img class="carousel-slide" src="assets/Images/Banner images/Healthcare (2).png" alt="Healthcare">
+                    <img class="carousel-slide active" src="/assets/Images/Banner images/Fintech.png" alt="Fintech">
+                    <img class="carousel-slide" src="/assets/Images/Banner images/Logistics.png" alt="Logistics">
+                    <img class="carousel-slide" src="/assets/Images/Banner images/Ecommerce.png" alt="Ecommerce">
+                    <img class="carousel-slide" src="/assets/Images/Banner images/Management.png" alt="ManagementSystem">
+                    <img class="carousel-slide" src="/assets/Images/Banner images/Healthcare (2).png" alt="Healthcare">
 
                 </div>
 
@@ -240,79 +244,58 @@ import '../styles/global.css';
         </div>
     </section>
 
-    <!-------- Section 5 MarketPlace Place -------->
-    <div class="marketplace">
-        <svg viewBox="0 0 0 0" fill="none" style="position: absolute; width: 0; height: 0;">
-            <defs>
-                <filter id="water-filter">
-                    <feTurbulence id="turbulence-filter" type="fractalNoise" baseFrequency=".03" numOctaves="1"
-                        result="noise" />
-                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="B"
-                        yChannelSelector="G" />
-                </filter>
-                <animate id="anim1" xlink:href="#turbulence-filter" attributeName="baseFrequency" from=".03" to=".033"
-                    dur="3s" begin="0s; anim2.end" fill="freeze" />
-                <animate id="anim2" xlink:href="#turbulence-filter" attributeName="baseFrequency" from=".033" to=".03"
-                    dur="3s" begin="anim1.end" fill="freeze" />
-            </defs>
-        </svg>
-        <div class="marketplace-bg"></div>
+<!-------- Section 5 MarketPlace Place -------->
+<div class="marketplace">
+    <div class="marketplace-container" style="position: relative;">
 
-        <div class="marketplace-container" style="position: relative; min-height: 520px;">
-
-            <div class="marketplace-title"
-                style="position: relative; z-index: 10; padding-bottom: 0; margin-bottom: 0; pointer-events: none;">
-                <div class="mp-text-left">
-                    Designed for people. Built for businesses. Engineered to grow.
-                    Every screen,every interaction, and every feature is crafted
-                    to deliver an experience your users will remember.
-                </div>
-                <div class="mp-text-right">
-                    Designed for people. Built for businesses. Engineered to grow.
-                    Every screen, every interaction, and every feature is crafted
-                    to deliver an experience your users will remember.
-                </div>
+        <div class="marketplace-title"
+            style="position: relative; z-index: 10; padding-bottom: 0; margin-bottom: 0; pointer-events: none;">
+            <div class="mp-text">
+                Designed for people. Built for businesses. Engineered to grow.
+                Every screen, every interaction, and every feature is crafted
+                to deliver an experience your users will remember.
             </div>
-
-            <div id="particle-wave-container"></div>
         </div>
+
+        <div id="particle-wave-container"></div>
     </div>
+</div>
     <!------- Section 7 Wavy Cards ------->
     <section class="wavy-cards">
         <div class="wavy-cards-container">
             <div class="wavy-cards-track top-track">
                 <!-- Top -->
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm angels"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm angels"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society"></div>
 
 
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm angels"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm angels"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society"></div>
 
 
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm angels"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm angels"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society"></div>
 
             </div>
 
@@ -330,35 +313,35 @@ import '../styles/global.css';
 
             <div class="wavy-cards-track bottom-track">
                 <!-- First set -->
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm_angels"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm_angels"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui"></div>
 
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm_angels"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm_angels"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui"></div>
 
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Society.png" alt="Society"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Ugive.png" alt="ugive"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/PalmAngels.png" alt="palm_angels"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Thor.png" alt="thor"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Browns.png" alt="Browns"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Flock.png" alt="flock"></div>
-                <div class="wavy-card ph-medium"><img src="assets/Logo/logos/Alanui.png" alt="alanui"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm_angels"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock"></div>
+                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui"></div>
 
             </div>
         </div>
@@ -378,7 +361,7 @@ import '../styles/global.css';
                 <span class="storytelling-word"> Mobile </span><span class="storytelling-word">Experiences</span>
             </h2>
 
-            <div class="story-cards">
+            <div class="story-cards" id="storyCards">
                 <!-- Left Card -->
                 <div class="story-card card-white">
                     <div class="card-top-bar">
@@ -388,7 +371,7 @@ import '../styles/global.css';
                         <div class="author-bubble author-blue">@Featured</div>
                     </div>
                     <div class="card-visual-placeholder">
-                        <img src="assets/Images/Talkbrush.png" alt="Talkbrush">
+                        <img src="/assets/Images/Talkbrush.png" alt="Talkbrush">
                     </div>
                     <div class="card-info">
                         <h3>Talk Brush</h3>
@@ -403,7 +386,7 @@ import '../styles/global.css';
                 <!-- Right Card -->
                 <div class="story-card card-mixed">
                     <div class="card-blue-placeholder">
-                        <img src="assets/Images/Ugive.png" alt="Ugive">
+                        <img src="/assets/Images/Ugive.png" alt="Ugive">
                     </div>
                     <div class="card-info bg-white">
                         <h3>Ugive</h3>
@@ -423,7 +406,7 @@ import '../styles/global.css';
                         <div class="author-bubble author-blue">@Live</div>
                     </div>
                     <div class="card-visual-placeholder">
-                        <img src="assets/Images/Flock.png" alt="Flock">
+                        <img src="/assets/Images/Flock.png" alt="Flock">
                     </div>
                     <div class="card-info">
                         <h3>Flock</h3>
@@ -439,7 +422,7 @@ import '../styles/global.css';
                 <!-- Right Card 2 -->
                 <div class="story-card card-mixed">
                     <div class="card-blue-placeholder">
-                        <img src="assets/Images/Society.png" alt="Society">
+                        <img src="/assets/Images/Society.png" alt="Society">
                     </div>
                     <div class="card-info bg-white">
                         <h3>Smart Society</h3>
@@ -453,6 +436,9 @@ import '../styles/global.css';
                 </div>
             </div>
         </div>
+
+        <!-- Dot pagination, mobile only -->
+        <div class="swiper-dots" id="swiperDots"></div>
     </section>
 
     <!-------- Section 9 Market  ---------->
@@ -483,32 +469,36 @@ import '../styles/global.css';
 
                     <div class="mp-card">
                         <div class="mp-img-placeholder">
-                            <img src="assets/Images/Chatbot.png" alt="">
+                            <img src="/assets/Images/Chatbot.png" alt="">
                         </div>
                         <h4>AI ChatBot</h4>
                     </div>
 
                     <div class="mp-card">
                         <div class="mp-img-placeholder">
-                            <img src="assets/Images/SmartRecommendation.png" alt="">
+                            <img src="/assets/Images/SmartRecommendation.png" alt="">
                         </div>
                         <h4>Smart Recommendation</h4>
                     </div>
 
                     <div class="mp-card">
                         <div class="mp-img-placeholder">
-                            <img src="assets/Images/RealTimeTranslation.png" alt="">
+                            <img src="/assets/Images/RealTimeTranslation.png" alt="">
                         </div>
                         <h4>Real-Time Translation</h4>
                     </div>
 
                     <div class="mp-card">
                         <div class="mp-img-placeholder">
-                            <img src="assets/Images/Automation.png" alt="">
+                            <img src="/assets/Images/Automation.png" alt="">
                         </div>
                         <h4>Automation</h4>
                     </div>
 
+                </div>
+
+                <div class="market-pagination" id="marketDots">
+                    <!-- Dots generated by JS -->
                 </div>
 
             </div>
@@ -523,29 +513,29 @@ import '../styles/global.css';
 
             <div class="animation-wrapper">
                 <!-- Col 1 -->
-                <div class="card shrink-c1"><img src="assets/Images/Shrink/bubbles_card.png" alt="1"></div>
-                <div class="card shrink-c2"><img src="assets/Images/Shrink/bhedu_card.png" alt="2"></div>
+                <div class="card shrink-c1"><img src="/assets/Images/Shrink/bubbles_card.png" alt="1"></div>
+                <div class="card shrink-c2"><img src="/assets/Images/Shrink/bhedu_card.png" alt="2"></div>
 
                 <!-- Col 2 -->
-                <div class="card shrink-c3"><img src="assets/Images/Shrink/home_v2_card.png" alt="3"></div>
-                <div class="card shrink-c4"><img src="assets/Images/Shrink/loading_quote.png" alt="4"></div>
-                <div class="card shrink-c5"><img src="assets/Images/Shrink/community_card.png" alt="5"></div>
+                <div class="card shrink-c3"><img src="/assets/Images/Shrink/home_v2_card.png" alt="3"></div>
+                <div class="card shrink-c4"><img src="/assets/Images/Shrink/loading_quote.png" alt="4"></div>
+                <div class="card shrink-c5"><img src="/assets/Images/Shrink/community_card.png" alt="5"></div>
 
                 <!-- Col 3 (Center column) -->
-                <div class="card shrink-c6"><img src="assets/Images/Shrink/calming playlist.png" alt="6"></div>
-                <div class="card shrink-c7"><img src="assets/Images/Shrink/home_full_card.png" alt="7"></div>
+                <div class="card shrink-c6"><img src="/assets/Images/Shrink/calming playlist.png" alt="6"></div>
+                <div class="card shrink-c7"><img src="/assets/Images/Shrink/home_full_card.png" alt="7"></div>
 
                 <!-- Col 4 -->
-                <div class="card shrink-c8"><img src="assets/Images/Shrink/journal_v2_card.png" alt="8"></div>
-                <div class="card shrink-c9"><img src="assets/Images/Shrink/care_tools_v2_card.png" alt="9"></div>
-                <div class="card shrink-c10"><img src="assets/Images/Shrink/loading_quote.png" alt="10"></div>
+                <div class="card shrink-c8"><img src="/assets/Images/Shrink/journal_v2_card.png" alt="8"></div>
+                <div class="card shrink-c9"><img src="/assets/Images/Shrink/care_tools_v2_card.png" alt="9"></div>
+                <div class="card shrink-c10"><img src="/assets/Images/Shrink/girliepop_card.png" alt="10"></div>
 
                 <!-- Col 5 -->
-                <div class="card shrink-c11"><img src="assets/Images/Shrink/bellie_card.png" alt="11"></div>
-                <div class="card shrink-c12"><img src="assets/Images/Shrink/pip_card.png" alt="12"></div>
+                <div class="card shrink-c11"><img src="/assets/Images/Shrink/bellie_card.png" alt="11"></div>
+                <div class="card shrink-c12"><img src="/assets/Images/Shrink/pip_card.png" alt="12"></div>
 
 
-                <div class="image"><img src="assets/Images/Shrink/Splash.png" alt="Splash"></div>
+                <div class="image"><img src="/assets/Images/Shrink/Splash.png" alt="Splash"></div>
             </div>
         </div>
     </section>
@@ -555,6 +545,14 @@ import '../styles/global.css';
         <div class="grid-container">
             <div class="large-grid-top">
                 <div class="lgt-marquee">
+                    <span class="lgt-word"></span>
+                    <div class="lgt-sq "></div>
+                    <div class="lgt-sq "></div>
+                    <div class="lgt-sq "></div>
+                    <span class="lgt-word">Built With the Best</span>
+                    <div class="lgt-img-ph"></div>
+                    <span class="lgt-word">For the Best Results </span>
+                    <!-- Duplicate for seamless loop -->
                     <span class="lgt-word">ide</span>
                     <div class="lgt-sq "></div>
                     <div class="lgt-sq "></div>
@@ -566,22 +564,22 @@ import '../styles/global.css';
 
                 <div class="lgt-scattered-icons">
                     <!-- Left group -->
-                    <div class="lgt-circle c1"><img src="assets/Logo/Flutter.svg" alt="Flutter"></div>
-                    <div class="lgt-circle c2"><img src="assets/Logo/React-Native.svg" alt="React Native"></div>
-                    <div class="lgt-circle c3"><img src="assets/Logo/Figma.svg" alt="Figma"></div>
-                    <div class="lgt-circle c4"><img src="assets/Logo/Kotlin.svg" alt="Kotlin"></div>
-                    <div class="lgt-circle c5"><img src="assets/Logo/Next.js.svg" alt="Next.js"></div>
-                    <div class="lgt-circle c6"><img src="assets/Logo/Php.png" alt="PHP"></div>
+                    <div class="lgt-circle c1"><img src="/assets/Logo/Flutter.svg" alt="Flutter"></div>
+                    <div class="lgt-circle c2"><img src="/assets/Logo/React-Native.svg" alt="React Native"></div>
+                    <div class="lgt-circle c3"><img src="/assets/Logo/Figma.svg" alt="Figma"></div>
+                    <div class="lgt-circle c4"><img src="/assets/Logo/Kotlin.svg" alt="Kotlin"></div>
+                    <div class="lgt-circle c5"><img src="/assets/Logo/Next.js.svg" alt="Next.js"></div>
+                    <div class="lgt-circle c6"><img src="/assets/Logo/Php.png" alt="PHP"></div>
                     <!-- Right group -->
-                    <div class="lgt-circle c7"><img src="assets/Logo/Postman.png" alt="Postman"></div>
-                    <div class="lgt-circle c8"><img src="assets/Logo/Python.svg" alt="Python"></div>
-                    <div class="lgt-circle c9"><img src="assets/Logo/node.js.svg" alt="Node.js"></div>
-                    <div class="lgt-circle c10"><img src="assets/Logo/typescript.svg" alt="TypeScript">
+                    <div class="lgt-circle c7"><img src="/assets/Logo/Postman.png" alt="Postman"></div>
+                    <div class="lgt-circle c8"><img src="/assets/Logo/Python.svg" alt="Python"></div>
+                    <div class="lgt-circle c9"><img src="/assets/Logo/node.js.svg" alt="Node.js"></div>
+                    <div class="lgt-circle c10"><img src="/assets/Logo/typescript.svg" alt="TypeScript">
                     </div>
-                    <div class="lgt-circle c11"><img src="assets/Logo/Firebase.png" alt="Firebase">
+                    <div class="lgt-circle c11"><img src="/assets/Logo/Firebase.png" alt="Firebase">
                     </div>
-                    <div class="lgt-circle c12"><img src="assets/Logo/mysql.png" alt="mysql"></div>
-                    <div class="lgt-circle c13"><img src="assets/Logo/Mongodb.png" alt="Mongodb"></div>
+                    <div class="lgt-circle c12"><img src="/assets/Logo/mysql.png" alt="mysql"></div>
+                    <div class="lgt-circle c13"><img src="/assets/Logo/Mongodb.png" alt="Mongodb"></div>
 
 
                 </div>
@@ -605,7 +603,7 @@ import '../styles/global.css';
                         </div>
 
 
-                        <form class="contact-form">
+                        <form class="contact-form" id="contactForm">
 
                             <div class="form-group">
                                 <label>Name <span>*</span></label>
@@ -649,7 +647,7 @@ import '../styles/global.css';
                             Book a free consultation with our experts.
                         </div>
                         <button class="Archives"
-                            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/cyberbells/new-meeting?hide_gdpr_banner=1&month=2026-07'});return false;">
+                            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/cyberbells/new-meeting?hide_gdpr_banner=1'});return false;">
                             Book a Strategy Session
                         </button>
                     </div>
@@ -708,6 +706,104 @@ import '../styles/global.css';
     </div>
 
     <script src="../scripts/main.js"></script>
+
+    <script>
+    // Story Cards Pagination
+    (function () {
+        const track = document.getElementById('storyCards');
+        const dotsWrap = document.getElementById('swiperDots');
+        if (!track || !dotsWrap) return;
+        const cards = Array.from(track.children);
+
+        cards.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'swiper-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => {
+                cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            });
+            dotsWrap.appendChild(dot);
+        });
+
+        const dots = Array.from(dotsWrap.children);
+
+        function updateActiveDot() {
+            const trackRect = track.getBoundingClientRect();
+            const center = trackRect.left + trackRect.width / 2;
+            let closest = 0;
+            let closestDist = Infinity;
+            cards.forEach((card, i) => {
+                const r = card.getBoundingClientRect();
+                const cardCenter = r.left + r.width / 2;
+                const dist = Math.abs(cardCenter - center);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closest = i;
+                }
+            });
+            dots.forEach((d, i) => d.classList.toggle('active', i === closest));
+        }
+
+        let ticking = false;
+        track.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateActiveDot();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+        window.addEventListener('resize', updateActiveDot);
+    })();
+
+    // Market Cards Pagination (Mobile)
+    (function () {
+        const track = document.querySelector('.market-cards');
+        const dotsWrap = document.getElementById('marketDots');
+        if (!track || !dotsWrap) return;
+        const cards = Array.from(track.children);
+
+        cards.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'market-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => {
+                cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            });
+            dotsWrap.appendChild(dot);
+        });
+
+        const dots = Array.from(dotsWrap.children);
+
+        function updateActiveDot() {
+            const trackRect = track.getBoundingClientRect();
+            const center = trackRect.left + trackRect.width / 2;
+            let closest = 0;
+            let closestDist = Infinity;
+            cards.forEach((card, i) => {
+                const r = card.getBoundingClientRect();
+                const cardCenter = r.left + r.width / 2;
+                const dist = Math.abs(cardCenter - center);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closest = i;
+                }
+            });
+            dots.forEach((d, i) => d.classList.toggle('active', i === closest));
+        }
+
+        let ticking = false;
+        track.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateActiveDot();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+        window.addEventListener('resize', updateActiveDot);
+    })();
+    </script>
 </body>
 
 </html>
