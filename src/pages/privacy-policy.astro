@@ -1,4 +1,7 @@
 ---
+
+import { Image } from 'astro:assets';
+const images = import.meta.glob('/src/assets/**/*.{jpeg,jpg,png,gif,webp,svg}', { eager: true });
 import '../styles/global.css';
 ---
 <!DOCTYPE html>
@@ -48,7 +51,7 @@ import '../styles/global.css';
     <nav class="navbar">
         <div class="nav-container">
             <a href="/" class="nav-logo" style="text-decoration: none;">
-                <img src="/assets/Logo/CyberLogo.png" alt="CyberLogo" loading="lazy" decoding="async">
+                <Image src={images['/src/assets/Logo/CyberLogo.png']?.default} alt="CyberLogo" loading="lazy" decoding="async" />
             </a>
         </div>
     </nav>
@@ -76,7 +79,7 @@ import '../styles/global.css';
                   d. Usage Data: IP address, browser type, operating system, pages visited, and other analytics. <br />
                   e. Communication Data: Records of correspondence with us, including emails and chat logs. <br />
                   f. Marketing Preferences: Your preferences for receiving promotional communications. <br />
-                  g. Device Information: Details about the device you use to access our services.
+                  g. Device Information: Details about the device you use to access our services. 
                 </p>
     
                 <h2>How We Collect Data:</h2>
@@ -170,7 +173,7 @@ import '../styles/global.css';
                     © <span id="currentYear"></span> Cyberbells. All rights reserved.
                 </p>
                 <a href="https://profiles.dunsregistered.com/DunsRegisteredProfileAnywhere.aspx?key1=3198515&PaArea=Email" target="_blank" rel="noopener noreferrer" class="duns-link">
-                    <img src="/assets/Logo/cyberbells_footer.jpg" alt="Cyberbells Duns" class="duns-img">
+                    <Image src={images['/src/assets/Logo/cyberbells_footer.jpg']?.default} alt="Cyberbells Duns" class="duns-img" />
                 </a>
                 <div class="footer-legal">
                     <a href="/privacy-policy" class="privacy-link">Privacy Policy</a>

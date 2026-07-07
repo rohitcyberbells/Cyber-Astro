@@ -1,4 +1,7 @@
 ---
+
+import { Image } from 'astro:assets';
+const images = import.meta.glob('/src/assets/**/*.{jpeg,jpg,png,gif,webp,svg}', { eager: true });
 import '../styles/global.css';
 ---
 <!DOCTYPE html>
@@ -20,14 +23,14 @@ import '../styles/global.css';
     <meta property="og:url" content="https://cyberbells.com/">
     <meta property="og:title" content="CyberBells | High-Quality Mobile Application Development">
     <meta property="og:description" content="CyberBells turns your app idea into reality. We design, develop, test, and publish your mobile app on the App Store and Google Play in as little as 90 days.">
-    <meta property="og:image" content="https://cyberbells.com/assets/Logo/CyberLogo.png">
+    <meta property="og:image" content={"https://cyberbells.com" + (images['/src/assets/Logo/CyberLogo.png']?.default?.src || "")}>
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cyberbells.com/">
     <meta property="twitter:title" content="CyberBells | High-Quality Mobile Application Development">
     <meta property="twitter:description" content="CyberBells turns your app idea into reality. We design, develop, test, and publish your mobile app on the App Store and Google Play.">
-    <meta property="twitter:image" content="https://cyberbells.com/assets/Logo/CyberLogo.png">
+    <meta property="twitter:image" content={"https://cyberbells.com" + (images['/src/assets/Logo/CyberLogo.png']?.default?.src || "")}>
 
     <link rel="canonical" href="https://cyberbells.com/">
 
@@ -45,7 +48,7 @@ import '../styles/global.css';
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="/assets/Logo/CyberLogo.png" alt="CyberLogo" loading="lazy" decoding="async">
+                <Image src={images['/src/assets/Logo/CyberLogo.png']?.default} alt="CyberLogo" loading="lazy" decoding="async" />
             </div>
         </div>
     </nav>
@@ -62,13 +65,13 @@ import '../styles/global.css';
 
                 <div class="hero-cards-wrapper">
                     <div class="cards">
-                        <div class="card1 ph-card"><img src="/assets/Images/Hero/flock.jpg" alt="Flock App Interface" width="300" height="500" ></div>
-                        <div class="card2 ph-card"><img src="/assets/Images/Hero/SafeGrow.jpg" alt="SafeGrow Interface" width="300" height="500" ></div>
-                        <div class="card3 ph-card"><img src="/assets/Images/Hero/Coffee.jpg" alt="Coffee App UI" width="300" height="500" ></div>
-                        <div class="card4 ph-card"><img src="/assets/Images/Hero/ugive.jpg" alt="Ugive App Preview" width="300" height="500" ></div>
-                        <div class="card5 ph-card"><img src="/assets/Images/Hero/Browns.jpg" alt="Browns E-Commerce UI" width="300" height="500" ></div>
-                        <div class="card6 ph-card"><img src="/assets/Images/Hero/OnCoffee.png" alt="OnCoffee Delivery App" width="300" height="500" ></div>
-                        <div class="card7 ph-card"><img src="/assets/Images/Hero/Splash.jpg" alt="Splash Analytics Dashboard" width="300" height="500" fetchpriority="high" loading="eager" decoding="async" ></div>
+                        <div class="card1 ph-card"><Image src={images['/src/assets/Images/Hero/flock.jpg']?.default} alt="Flock App Interface" width="300" height="500"  /></div>
+                        <div class="card2 ph-card"><Image src={images['/src/assets/Images/Hero/SafeGrow.jpg']?.default} alt="SafeGrow Interface" width="300" height="500"  /></div>
+                        <div class="card3 ph-card"><Image src={images['/src/assets/Images/Hero/Coffee.jpg']?.default} alt="Coffee App UI" width="300" height="500"  /></div>
+                        <div class="card4 ph-card"><Image src={images['/src/assets/Images/Hero/ugive.jpg']?.default} alt="Ugive App Preview" width="300" height="500"  /></div>
+                        <div class="card5 ph-card"><Image src={images['/src/assets/Images/Hero/Browns.jpg']?.default} alt="Browns E-Commerce UI" width="300" height="500"  /></div>
+                        <div class="card6 ph-card"><Image src={images['/src/assets/Images/Hero/OnCoffee.png']?.default} alt="OnCoffee Delivery App" width="300" height="500"  /></div>
+                        <div class="card7 ph-card"><Image src={images['/src/assets/Images/Hero/Splash.jpg']?.default} alt="Splash Analytics Dashboard" width="300" height="500" fetchpriority="high" loading="eager" decoding="async"  /></div>
                     </div>
                 </div>
 
@@ -149,11 +152,11 @@ import '../styles/global.css';
 
             <div class="gateway-img-wrapper">
                 <div class="gateway-carousel">
-                    <img class="carousel-slide active" src="/assets/Images/Banner images/Fintech.png" alt="Fintech" loading="lazy" decoding="async">
-                    <img class="carousel-slide" src="/assets/Images/Banner images/Logistics.png" alt="Logistics" loading="lazy" decoding="async">
-                    <img class="carousel-slide" src="/assets/Images/Banner images/Ecommerce.png" alt="Ecommerce" loading="lazy" decoding="async">
-                    <img class="carousel-slide" src="/assets/Images/Banner images/Management.png" alt="ManagementSystem" loading="lazy" decoding="async">
-                    <img class="carousel-slide" src="/assets/Images/Banner images/Healthcare (2).png" alt="Healthcare" loading="lazy" decoding="async">
+                    <Image class="carousel-slide active" src={images['/src/assets/Images/Banner images/Fintech.png']?.default} alt="Fintech" loading="lazy" decoding="async" />
+                    <Image class="carousel-slide" src={images['/src/assets/Images/Banner images/Logistics.png']?.default} alt="Logistics" loading="lazy" decoding="async" />
+                    <Image class="carousel-slide" src={images['/src/assets/Images/Banner images/Ecommerce.png']?.default} alt="Ecommerce" loading="lazy" decoding="async" />
+                    <Image class="carousel-slide" src={images['/src/assets/Images/Banner images/Management.png']?.default} alt="ManagementSystem" loading="lazy" decoding="async" />
+                    <Image class="carousel-slide" src={images['/src/assets/Images/Banner images/Healthcare (2).png']?.default} alt="Healthcare" loading="lazy" decoding="async" />
 
                 </div>
 
@@ -245,37 +248,37 @@ import '../styles/global.css';
         <div class="wavy-cards-container">
             <div class="wavy-cards-track top-track">
                 <!-- Top -->
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm angels" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society" loading="lazy" decoding="async"></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Alanui.png']?.default} alt="alanui" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Flock.png']?.default} alt="flock" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Browns.png']?.default} alt="Browns" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Thor.png']?.default} alt="thor" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/PalmAngels.png']?.default} alt="palm angels" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/TalkBrush.png']?.default} alt="talkbrush" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Ugive.png']?.default} alt="ugive" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Offwhite.png']?.default} alt="offwhite" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Society.png']?.default} alt="Society" loading="lazy" decoding="async" /></div>
 
 
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm angels" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society" loading="lazy" decoding="async"></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Alanui.png']?.default} alt="alanui" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Flock.png']?.default} alt="flock" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Browns.png']?.default} alt="Browns" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Thor.png']?.default} alt="thor" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/PalmAngels.png']?.default} alt="palm angels" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/TalkBrush.png']?.default} alt="talkbrush" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Ugive.png']?.default} alt="ugive" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Offwhite.png']?.default} alt="offwhite" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Society.png']?.default} alt="Society" loading="lazy" decoding="async" /></div>
 
 
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm angels" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society" loading="lazy" decoding="async"></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Alanui.png']?.default} alt="alanui" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Flock.png']?.default} alt="flock" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Browns.png']?.default} alt="Browns" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Thor.png']?.default} alt="thor" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/PalmAngels.png']?.default} alt="palm angels" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/TalkBrush.png']?.default} alt="talkbrush" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Ugive.png']?.default} alt="ugive" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Offwhite.png']?.default} alt="offwhite" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Society.png']?.default} alt="Society" loading="lazy" decoding="async" /></div>
 
             </div>
 
@@ -293,35 +296,35 @@ import '../styles/global.css';
 
             <div class="wavy-cards-track bottom-track">
                 <!-- First set -->
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm_angels" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui" loading="lazy" decoding="async"></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Society.png']?.default} alt="Society" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Offwhite.png']?.default} alt="offwhite" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Ugive.png']?.default} alt="ugive" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/TalkBrush.png']?.default} alt="talkbrush" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/PalmAngels.png']?.default} alt="palm_angels" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Thor.png']?.default} alt="thor" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Browns.png']?.default} alt="Browns" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Flock.png']?.default} alt="flock" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Alanui.png']?.default} alt="alanui" loading="lazy" decoding="async" /></div>
 
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm_angels" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui" loading="lazy" decoding="async"></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Society.png']?.default} alt="Society" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Offwhite.png']?.default} alt="offwhite" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Ugive.png']?.default} alt="ugive" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/TalkBrush.png']?.default} alt="talkbrush" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/PalmAngels.png']?.default} alt="palm_angels" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Thor.png']?.default} alt="thor" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Browns.png']?.default} alt="Browns" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Flock.png']?.default} alt="flock" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Alanui.png']?.default} alt="alanui" loading="lazy" decoding="async" /></div>
 
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Society.png" alt="Society" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Offwhite.png" alt="offwhite" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Ugive.png" alt="ugive" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/TalkBrush.png" alt="talkbrush" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/PalmAngels.png" alt="palm_angels" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Thor.png" alt="thor" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Browns.png" alt="Browns" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Flock.png" alt="flock" loading="lazy" decoding="async"></div>
-                <div class="wavy-card ph-medium"><img src="/assets/Logo/logos/Alanui.png" alt="alanui" loading="lazy" decoding="async"></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Society.png']?.default} alt="Society" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Offwhite.png']?.default} alt="offwhite" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Ugive.png']?.default} alt="ugive" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/TalkBrush.png']?.default} alt="talkbrush" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/PalmAngels.png']?.default} alt="palm_angels" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Thor.png']?.default} alt="thor" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Browns.png']?.default} alt="Browns" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Flock.png']?.default} alt="flock" loading="lazy" decoding="async" /></div>
+                <div class="wavy-card ph-medium"><Image src={images['/src/assets/Logo/logos/Alanui.png']?.default} alt="alanui" loading="lazy" decoding="async" /></div>
 
             </div>
         </div>
@@ -351,7 +354,7 @@ import '../styles/global.css';
                         <div class="author-bubble author-blue">@Featured</div>
                     </div>
                     <div class="card-visual-placeholder">
-                        <img src="/assets/Images/TalkBrush.png" alt="TalkBrush.png" loading="lazy" decoding="async">
+                        <Image src={images['/src/assets/Images/TalkBrush.png']?.default} alt="TalkBrush.png" loading="lazy" decoding="async" />
                     </div>
                     <div class="card-info">
                         <h3>Talk Brush</h3>
@@ -372,7 +375,7 @@ import '../styles/global.css';
                         <div class="author-bubble author-blue">@Trending</div>
                     </div>
                     <div class="card-visual-placeholder">
-                        <img src="/assets/Images/UGive.png" alt="Ugive" loading="lazy" decoding="async">
+                        <Image src={images['/src/assets/Images/UGive.png']?.default} alt="Ugive" loading="lazy" decoding="async" />
                     </div>
                     <div class="card-info">
                         <h3>Ugive</h3>
@@ -392,7 +395,7 @@ import '../styles/global.css';
                         <div class="author-bubble author-blue">@Live</div>
                     </div>
                     <div class="card-visual-placeholder">
-                        <img src="/assets/Images/Flock.png" alt="Flock" loading="lazy" decoding="async">
+                        <Image src={images['/src/assets/Images/Flock.png']?.default} alt="Flock" loading="lazy" decoding="async" />
                     </div>
                     <div class="card-info">
                         <h3>Flock</h3>
@@ -414,7 +417,7 @@ import '../styles/global.css';
                         <div class="author-bubble author-blue">@New</div>
                     </div>
                     <div class="card-visual-placeholder">
-                        <img src="/assets/Images/Society.png" alt="Society" loading="lazy" decoding="async">
+                        <Image src={images['/src/assets/Images/Society.png']?.default} alt="Society" loading="lazy" decoding="async" />
                     </div>
                     <div class="card-info">
                         <h3>Smart Society</h3>
@@ -461,28 +464,28 @@ import '../styles/global.css';
 
                     <div class="mp-card">
                         <div class="mp-img-placeholder">
-                            <img src="/assets/Images/Chatbot.png" alt="" loading="lazy" decoding="async">
+                            <Image src={images['/src/assets/Images/Chatbot.png']?.default} alt="" loading="lazy" decoding="async" />
                         </div>
                         <h4>AI ChatBot</h4>
                     </div>
 
                     <div class="mp-card">
                         <div class="mp-img-placeholder">
-                            <img src="/assets/Images/Recommendation.png" alt="" loading="lazy" decoding="async">
+                            <Image src={images['/src/assets/Images/Recommendation.png']?.default} alt="" loading="lazy" decoding="async" />
                         </div>
                         <h4>Smart Recommendation</h4>
                     </div>
 
                     <div class="mp-card">
                         <div class="mp-img-placeholder">
-                            <img src="/assets/Images/RealTimeTranslation.png" alt="" loading="lazy" decoding="async">
+                            <Image src={images['/src/assets/Images/RealTimeTranslation.png']?.default} alt="" loading="lazy" decoding="async" />
                         </div>
                         <h4>Real-Time Translation</h4>
                     </div>
 
                     <div class="mp-card">
                         <div class="mp-img-placeholder">
-                            <img src="/assets/Images/Automation.png" alt="" loading="lazy" decoding="async">
+                            <Image src={images['/src/assets/Images/Automation.png']?.default} alt="" loading="lazy" decoding="async" />
                         </div>
                         <h4>Automation</h4>
                     </div>
@@ -505,29 +508,29 @@ import '../styles/global.css';
 
             <div class="animation-wrapper">
                 <!-- Col 1 -->
-                <div class="card shrink-c1"><img src="/assets/Images/Shrink/bubbles_card.png" alt="1" loading="lazy" decoding="async"></div>
-                <div class="card shrink-c2"><img src="/assets/Images/Shrink/bhedu_card.png" alt="2" loading="lazy" decoding="async"></div>
+                <div class="card shrink-c1"><Image src={images['/src/assets/Images/Shrink/bubbles_card.png']?.default} alt="1" loading="lazy" decoding="async" /></div>
+                <div class="card shrink-c2"><Image src={images['/src/assets/Images/Shrink/bhedu_card.png']?.default} alt="2" loading="lazy" decoding="async" /></div>
 
                 <!-- Col 2 -->
-                <div class="card shrink-c3"><img src="/assets/Images/Shrink/home_v2_card.png" alt="3" loading="lazy" decoding="async"></div>
-                <div class="card shrink-c4"><img src="/assets/Images/Shrink/loading_quote.png" alt="4" loading="lazy" decoding="async"></div>
-                <div class="card shrink-c5"><img src="/assets/Images/Shrink/community_card.png" alt="5" loading="lazy" decoding="async"></div>
+                <div class="card shrink-c3"><Image src={images['/src/assets/Images/Shrink/home_v2_card.png']?.default} alt="3" loading="lazy" decoding="async" /></div>
+                <div class="card shrink-c4"><Image src={images['/src/assets/Images/Shrink/loading_quote.png']?.default} alt="4" loading="lazy" decoding="async" /></div>
+                <div class="card shrink-c5"><Image src={images['/src/assets/Images/Shrink/community_card.png']?.default} alt="5" loading="lazy" decoding="async" /></div>
 
                 <!-- Col 3 (Center column) -->
-                <div class="card shrink-c6"><img src="/assets/Images/Shrink/calming playlist.png" alt="6" loading="lazy" decoding="async"></div>
-                <div class="card shrink-c7"><img src="/assets/Images/Shrink/home_full_card.png" alt="7" loading="lazy" decoding="async"></div>
+                <div class="card shrink-c6"><Image src={images['/src/assets/Images/Shrink/calming playlist.png']?.default} alt="6" loading="lazy" decoding="async" /></div>
+                <div class="card shrink-c7"><Image src={images['/src/assets/Images/Shrink/home_full_card.png']?.default} alt="7" loading="lazy" decoding="async" /></div>
 
                 <!-- Col 4 -->
-                <div class="card shrink-c8"><img src="/assets/Images/Shrink/journal_v2_card.png" alt="8" loading="lazy" decoding="async"></div>
-                <div class="card shrink-c9"><img src="/assets/Images/Shrink/care_tools_v2_card.png" alt="9" loading="lazy" decoding="async"></div>
-                <div class="card shrink-c10"><img src="/assets/Images/Shrink/girliepop_card.png" alt="10" loading="lazy" decoding="async"></div>
+                <div class="card shrink-c8"><Image src={images['/src/assets/Images/Shrink/journal_v2_card.png']?.default} alt="8" loading="lazy" decoding="async" /></div>
+                <div class="card shrink-c9"><Image src={images['/src/assets/Images/Shrink/care_tools_v2_card.png']?.default} alt="9" loading="lazy" decoding="async" /></div>
+                <div class="card shrink-c10"><Image src={images['/src/assets/Images/Shrink/girliepop_card.png']?.default} alt="10" loading="lazy" decoding="async" /></div>
 
                 <!-- Col 5 -->
-                <div class="card shrink-c11"><img src="/assets/Images/Shrink/bellie_card.png" alt="11" loading="lazy" decoding="async"></div>
-                <div class="card shrink-c12"><img src="/assets/Images/Shrink/pip_card.png" alt="12" loading="lazy" decoding="async"></div>
+                <div class="card shrink-c11"><Image src={images['/src/assets/Images/Shrink/bellie_card.png']?.default} alt="11" loading="lazy" decoding="async" /></div>
+                <div class="card shrink-c12"><Image src={images['/src/assets/Images/Shrink/pip_card.png']?.default} alt="12" loading="lazy" decoding="async" /></div>
 
 
-                <div class="image"><img src="/assets/Images/Shrink/Splash.png" alt="Splash" loading="lazy" decoding="async"></div>
+                <div class="image"><Image src={images['/src/assets/Images/Shrink/Splash.png']?.default} alt="Splash" loading="lazy" decoding="async" /></div>
             </div>
         </div>
     </section>
@@ -556,22 +559,22 @@ import '../styles/global.css';
 
                 <div class="lgt-scattered-icons">
                     <!-- Left group -->
-                    <div class="lgt-circle c1"><img src="/assets/Logo/Flutter.svg" alt="Flutter" loading="lazy" decoding="async"></div>
-                    <div class="lgt-circle c2"><img src="/assets/Logo/React-Native.svg" alt="React Native" loading="lazy" decoding="async"></div>
-                    <div class="lgt-circle c3"><img src="/assets/Logo/Figma.svg" alt="Figma" loading="lazy" decoding="async"></div>
-                    <div class="lgt-circle c4"><img src="/assets/Logo/Kotlin.svg" alt="Kotlin" loading="lazy" decoding="async"></div>
-                    <div class="lgt-circle c5"><img src="/assets/Logo/Next.js.svg" alt="Next.js" loading="lazy" decoding="async"></div>
-                    <div class="lgt-circle c6 keep-upright"><img src="/assets/Logo/Php.png" alt="PHP" loading="lazy" decoding="async"></div>
+                    <div class="lgt-circle c1"><Image src={images['/src/assets/Logo/Flutter.svg']?.default} alt="Flutter" loading="lazy" decoding="async" /></div>
+                    <div class="lgt-circle c2"><Image src={images['/src/assets/Logo/React-Native.svg']?.default} alt="React Native" loading="lazy" decoding="async" /></div>
+                    <div class="lgt-circle c3"><Image src={images['/src/assets/Logo/Figma.svg']?.default} alt="Figma" loading="lazy" decoding="async" /></div>
+                    <div class="lgt-circle c4"><Image src={images['/src/assets/Logo/Kotlin.svg']?.default} alt="Kotlin" loading="lazy" decoding="async" /></div>
+                    <div class="lgt-circle c5"><Image src={images['/src/assets/Logo/Next.js.svg']?.default} alt="Next.js" loading="lazy" decoding="async" /></div>
+                    <div class="lgt-circle c6 keep-upright"><Image src={images['/src/assets/Logo/Php.png']?.default} alt="PHP" loading="lazy" decoding="async" /></div>
                     <!-- Right group -->
-                    <div class="lgt-circle c7"><img src="/assets/Logo/Postman.png" alt="Postman" loading="lazy" decoding="async"></div>
-                    <div class="lgt-circle c8"><img src="/assets/Logo/Python.svg" alt="Python" loading="lazy" decoding="async"></div>
-                    <div class="lgt-circle c9 keep-upright"><img src="/assets/Logo/node.js.svg" alt="Node.js" loading="lazy" decoding="async"></div>
-                    <div class="lgt-circle c10 keep-upright"><img src="/assets/Logo/typescript.svg" alt="TypeScript" loading="lazy" decoding="async">
+                    <div class="lgt-circle c7"><Image src={images['/src/assets/Logo/Postman.png']?.default} alt="Postman" loading="lazy" decoding="async" /></div>
+                    <div class="lgt-circle c8"><Image src={images['/src/assets/Logo/Python.svg']?.default} alt="Python" loading="lazy" decoding="async" /></div>
+                    <div class="lgt-circle c9 keep-upright"><Image src={images['/src/assets/Logo/node.js.svg']?.default} alt="Node.js" loading="lazy" decoding="async" /></div>
+                    <div class="lgt-circle c10 keep-upright"><Image src={images['/src/assets/Logo/typescript.svg']?.default} alt="TypeScript" loading="lazy" decoding="async" />
                     </div>
-                    <div class="lgt-circle c11"><img src="/assets/Logo/Firebase.png" alt="Firebase" loading="lazy" decoding="async">
+                    <div class="lgt-circle c11"><Image src={images['/src/assets/Logo/Firebase.png']?.default} alt="Firebase" loading="lazy" decoding="async" />
                     </div>
-                    <div class="lgt-circle c12 keep-upright"><img src="/assets/Logo/mysql.png" alt="mysql" loading="lazy" decoding="async"></div>
-                    <div class="lgt-circle c13"><img src="/assets/Logo/Mongodb.png" alt="Mongodb" loading="lazy" decoding="async"></div>
+                    <div class="lgt-circle c12 keep-upright"><Image src={images['/src/assets/Logo/mysql.png']?.default} alt="mysql" loading="lazy" decoding="async" /></div>
+                    <div class="lgt-circle c13"><Image src={images['/src/assets/Logo/Mongodb.png']?.default} alt="Mongodb" loading="lazy" decoding="async" /></div>
 
 
                 </div>
@@ -656,7 +659,7 @@ import '../styles/global.css';
                     © <span id="currentYear"></span> Cyberbells. All rights reserved.
                 </p>
                 <a href="https://profiles.dunsregistered.com/DunsRegisteredProfileAnywhere.aspx?key1=3198515&PaArea=Email" target="_blank" rel="noopener noreferrer" class="duns-link">
-                    <img src="/assets/Logo/cyberbells_footer.jpg" alt="Cyberbells Duns" class="duns-img">
+                    <Image src={images['/src/assets/Logo/cyberbells_footer.jpg']?.default} alt="Cyberbells Duns" class="duns-img" />
                 </a>
                 <div class="footer-legal">
                     <a href="/privacy-policy" class="privacy-link">Privacy Policy</a>
