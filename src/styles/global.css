@@ -107,26 +107,6 @@ html.lenis body {
     object-fit: contain;
 }
 
-.nav-links {
-    display: flex;
-    gap: 30px;
-    align-items: center;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--color-ink);
-    font-size: 0.85rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.nav-link.active {
-    font-weight: 600;
-}
-
 .play-icon {
     display: inline-block;
     width: 14px;
@@ -153,7 +133,7 @@ html.lenis body {
 
 .hero {
     width: 100%;
-    padding: 60px 20px 20px;
+    padding: 120px 20px 40px;
     background: var(--color-surface);
     text-align: center;
     position: relative;
@@ -171,7 +151,7 @@ html.lenis body {
     line-height: 1.05;
     letter-spacing: -0.04em;
     color: var(--color-ink);
-    margin-bottom: 10px;
+    margin-bottom: 24px;
 }
 
 .hero-word {
@@ -185,7 +165,7 @@ html.lenis body {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 .cards {
@@ -221,15 +201,14 @@ html.lenis body {
 .hero-para {
     font-size: 0.95rem;
     color: var(--color-ink-soft);
-    margin-bottom: 30px;
-    margin-top: 20px;
+    margin-bottom: 40px;
+    margin-top: 30px;
     font-weight: 500;
 }
 
 .hero-btn-wrapper {
-    position: absolute;
-    top: 500px;
-    left: 0;
+    position: relative;
+    margin-top: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -341,6 +320,7 @@ html.lenis body {
     width: 100%;
     padding: 180px 40px;
     background: var(--color-surface);
+    overflow: hidden;
 }
 
 .diagonal-card-container {
@@ -897,6 +877,16 @@ html.lenis body {
     padding-right: 30px;
 }
 
+@media (max-width: 768px) {
+    .wavy-cards-container {
+        gap: 60px;
+    }
+
+    .wavy-cards-track {
+        gap: 20px;
+    }
+}
+
 .wavy-card {
     border-radius: var(--radius-card-lg);
     background-color: var(--color-border-light);
@@ -1061,11 +1051,6 @@ html.lenis body {
     margin-top: auto;
 }
 
-.card-mixed .card-info {
-    padding: 30px;
-    background: white;
-}
-
 .card-info h3 {
     font-size: 1.5rem;
     font-weight: 600;
@@ -1099,6 +1084,7 @@ html.lenis body {
 
 .card-mixed {
     background: white;
+    padding: 30px;
 }
 
 /* SECTION 9 */
@@ -1330,26 +1316,19 @@ html.lenis body {
 
 .animation-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-}
-
-@media (min-width: 1600px) {
-    .shrink-section-container {
-        max-width: 1400px;
-        margin: 0 auto;
-    }
+    max-width: calc(100vh * (16 / 9));
+    max-height: calc(100vw * (9 / 16));
 }
 
 .shrink-section .card {
     position: absolute;
     width: 15%;
-    background: var(--color-border-light);
-    border-radius: var(--radius-card);
     overflow: hidden;
-    object-fit: contain;
     will-change: transform, opacity;
 }
 
@@ -1364,10 +1343,9 @@ html.lenis body {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
-    max-width: 1200px;
+    width: 78.125%;
+    /* 1200 / 1536 */
     height: 100%;
-    background: #d0d0d0;
     border-radius: var(--radius-card-lg);
     z-index: 10;
     overflow: hidden;
@@ -1386,39 +1364,39 @@ html.lenis body {
 
 .shrink-c1 {
     left: 6%;
-    top: 18vh;
-    height: 30vh;
+    top: 18%;
+    height: 30%;
     transform: perspective(1200px) rotateY(15deg);
 }
 
 .shrink-c2 {
     left: 6%;
-    top: 52vh;
-    height: 30vh;
+    top: 52%;
+    height: 30%;
     transform: perspective(1200px) rotateY(15deg);
 }
 
 .shrink-c3 {
     left: 23%;
-    top: 8vh;
+    top: 8%;
     width: 20%;
-    height: 25vh;
+    height: 25%;
     transform: perspective(1200px) rotateY(10deg);
 }
 
 .shrink-c4 {
     left: 23%;
-    top: 37vh;
+    top: 37%;
     width: 20%;
-    height: 25vh;
+    height: 25%;
     transform: perspective(1200px) rotateY(10deg);
 }
 
 .shrink-c5 {
     left: 23%;
-    top: 66vh;
+    top: 66%;
     width: 20%;
-    height: 25vh;
+    height: 25%;
     transform: perspective(1200px) rotateY(10deg);
 }
 
@@ -1435,50 +1413,50 @@ html.lenis body {
 
 .shrink-c6 {
     left: 42%;
-    top: -4vh;
+    top: -4%;
     width: 20%;
-    height: 30vh;
+    height: 30%;
 }
 
 .shrink-c7 {
     left: 42%;
-    top: 74vh;
+    top: 74%;
     width: 20%;
-    height: 30vh;
+    height: 30%;
 }
 
 .shrink-c8 {
     left: 62%;
-    top: 8vh;
-    height: 25vh;
+    top: 8%;
+    height: 25%;
     transform: perspective(1200px) rotateY(-10deg);
 }
 
 .shrink-c9 {
     left: 62%;
-    top: 37vh;
-    height: 25vh;
+    top: 37%;
+    height: 25%;
     transform: perspective(1200px) rotateY(-10deg);
 }
 
 .shrink-c10 {
     left: 62%;
-    top: 66vh;
-    height: 25vh;
+    top: 66%;
+    height: 25%;
     transform: perspective(1200px) rotateY(-10deg);
 }
 
 .shrink-c11 {
     left: 79%;
-    top: 18vh;
-    height: 30vh;
+    top: 18%;
+    height: 30%;
     transform: perspective(1200px) rotateY(-15deg);
 }
 
 .shrink-c12 {
     left: 79%;
-    top: 52vh;
-    height: 30vh;
+    top: 52%;
+    height: 30%;
     transform: perspective(1200px) rotateY(-15deg);
 }
 
@@ -1486,7 +1464,7 @@ html.lenis body {
 /* Section 12: Bento Grid */
 .grid {
     width: 100%;
-    padding: 120px 20px;
+    padding: 120px 20px 40px 20px;
     background: var(--color-white);
 }
 
@@ -1865,7 +1843,7 @@ html.lenis body {
 }
 
 .story-card.card-mixed {
-    margin-top: 80px;
+    margin-top: 0px;
 }
 
 .folder {
@@ -1953,26 +1931,80 @@ html.lenis body {
 }
 
 /* Footer */
-.Footer {
+.footer-main {
     width: 100%;
     background-color: var(--color-white);
-    padding: 40px 20px;
+    padding: 24px 20px;
     border-top: 1px solid #D3D3D3;
 }
 
 .footer-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-bottom > * {
+    flex: 1;
+}
+
+.copyright {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    text-align: left;
+}
+
+.duns-link {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.footer-left {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--color-black);
-    letter-spacing: 0.02em;
+.duns-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-legal {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.privacy-link {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.privacy-link:hover {
+    color: var(--color-ink);
+}
+
+@media (max-width: 768px) {
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-bottom > * {
+        flex: auto;
+        justify-content: center;
+        text-align: center;
+    }
+    .duns-link {
+        order: -1;
+    }
+    .copyright {
+        order: 1;
+    }
 }
 
 @media (max-width: 992px) {
@@ -1986,7 +2018,7 @@ html.lenis body {
     }
 
     .diagonal-card {
-        display: none !important;
+        padding: 80px 20px;
     }
 
     .diagonal-card-container {
@@ -2006,12 +2038,17 @@ html.lenis body {
 
     .dc-right {
         transform: scale(0.85);
-        margin-top: -40px;
+        margin-top: 0px;
+        height: 450px;
     }
 
     .storytelling-container {
         flex-direction: column;
         gap: 40px;
+    }
+
+    .story-cards {
+        grid-template-columns: 1fr;
     }
 
     .grid-bottom {
@@ -2056,7 +2093,41 @@ html.lenis body {
         margin-bottom: -20px;
     }
 
+    .diagonal-card-container {
+        gap: 0;
+    }
+
+    .dc-left {
+        display: contents;
+    }
+
+    .diagonal-title {
+        order: 1;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .diagonal-para {
+        order: 2;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
     .dc-right {
+        order: 3;
+        display: flex;
+        justify-content: center;
+        transform: scale(0.45);
+        transform-origin: top center;
+        width: 100%;
+        height: 400px;
+        margin-top: 30px;
+    }
+
+    .diagonal-btn-wrapper,
+    .dc-chat-bubble {
         display: none;
     }
 
@@ -2072,7 +2143,8 @@ html.lenis body {
     }
 
     .gateway-img-wrapper {
-        height: 200px;
+        height: auto;
+        aspect-ratio: 16 / 9;
     }
 
     .carousel-slide {
@@ -2122,6 +2194,31 @@ html.lenis body {
         max-width: 100%;
         height: auto;
         min-height: 200px;
+    }
+
+    .card-white,
+    .card-mixed {
+        padding: 20px;
+    }
+
+    .card-visual-placeholder {
+        height: 220px;
+        margin: 15px 0;
+    }
+
+    .card-info h3 {
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+    }
+
+    .card-info p {
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+    }
+
+    .card-pill-btn {
+        padding: 8px 18px;
+        font-size: 0.85rem;
     }
 
     .grid-container {
@@ -2761,5 +2858,53 @@ html.lenis body {
 @media (prefers-reduced-motion: no-preference) {
     html.low-power-scroll {
         scroll-behavior: smooth;
+    }
+}
+
+/* --- Large Desktop Responsiveness (1920x1080+) --- */
+@media (min-width: 1440px) {
+    .nav-container,
+    .hero-container,
+    .diagonal-card-container,
+    .gateway-container,
+    .marquee-container,
+    .storytelling-container,
+    .market-container,
+    .grid-container,
+    .footer-container {
+        max-width: 1400px;
+    }
+}
+
+@media (min-width: 1600px) {
+
+    .nav-container,
+    .hero-container,
+    .diagonal-card-container,
+    .gateway-container,
+    .marquee-container,
+    .storytelling-container,
+    .market-container,
+    .grid-container {
+        max-width: 1536px;
+    }
+
+    .wavy-cards-container,
+    .footer-container {
+        max-width: 1700px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .hero {
+        padding-top: 180px;
+    }
+
+    .hero-para {
+        margin-top: 60px;
+    }
+
+    .hero-btn-wrapper {
+        margin-top: 80px;
     }
 }

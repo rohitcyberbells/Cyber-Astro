@@ -54,14 +54,14 @@ function detectDeviceTier() {
 }
 
 const deviceTier = detectDeviceTier();
-const lowPowerMode = false; // Temporarily force false to ensure animations always play
+const lowPowerMode = false;
 
 let lenis = null;
 
 if (isDesktop) {
   lenis = new Lenis({
-    lerp: hasNativeMomentum ? 0.06 : 0.1,
-    wheelMultiplier: hasNativeMomentum ? 0.7 : 1,
+    lerp: hasNativeMomentum ? 0.08 : 0.06,
+    wheelMultiplier: hasNativeMomentum ? 0.8 : 1,
     touchMultiplier: 1.2,
     smoothWheel: true,
     syncTouch: false,
@@ -72,14 +72,14 @@ if (isDesktop) {
 
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(500, 33);
+  gsap.ticker.lagSmoothing(1000, 16);
   lenis.stop();
 }
 
 window.lenis = lenis;
 
-const SLOWED_MULTIPLIER = 0.25;
-const NORMAL_MULTIPLIER = 1;
+const SLOWED_MULTIPLIER = 0.35;
+const NORMAL_MULTIPLIER = hasNativeMomentum ? 0.8 : 1;
 
 const lenisSpeed = { value: SLOWED_MULTIPLIER };
 let speedTween = null;
@@ -172,11 +172,15 @@ const deal = { x: 0, y: 0 };
 const CARD_STATES = {
   stacked: (i) => ({ x: 0, y: 0, rotation: 0, scale: 1 }),
   fanned: (i) => ({ ...heroFanStates[i], scale: 1 }),
-  dealt: (i) => ({
-    x: deal.x + dealOffsets[i].x,
-    y: deal.y + dealOffsets[i].y,
-    rotation: dealOffsets[i].rotation,
-  }),
+  dealt: (i) => {
+    const isMobile = window.innerWidth <= 768;
+    const m = isMobile ? 0.65 : 1;
+    return {
+      x: deal.x + (dealOffsets[i].x * m),
+      y: deal.y + (dealOffsets[i].y * m),
+      rotation: dealOffsets[i].rotation,
+    };
+  },
 };
 
 const mm = gsap.matchMedia();
@@ -261,12 +265,6 @@ function buildHeroIntro(onIntroComplete) {
   return () => introMm.revert();
 }
 
-/* ==========================================================================
-   6. SECTION 2 — SCROLL MASTER (fold → travel → deal)
-   One ScrollTrigger drives both the timeline AND the hero-protection zone —
-   previously these were two separate ScrollTrigger instances on the same
-   trigger/start/end, doubling scroll-tick overhead for no reason.
-   ========================================================================== */
 
 function calculateDeltas() {
   const heroWrapper = document.querySelector('.hero-cards-wrapper .cards');
@@ -277,13 +275,22 @@ function calculateDeltas() {
   const dcRect = dcWrapper.getBoundingClientRect();
   const scrollY = window.scrollY;
 
+  const scale = heroRect.width / heroWrapper.offsetWidth || 1;
+
   const heroLeft = heroRect.left;
   const heroTop = heroRect.top + scrollY;
-  const dc3Left = dcRect.left + 240;
-  const dc3Top = dcRect.top + 220 + scrollY;
 
-  deal.x = dc3Left - heroLeft;
-  deal.y = dc3Top - heroTop;
+  let dc3Left, dc3Top;
+  if (window.innerWidth <= 768) {
+    dc3Left = dcRect.left + (dcRect.width / 2) - (heroRect.width / 2);
+    dc3Top = dcRect.top + (dcRect.height / 2) - (heroRect.height / 2) + scrollY;
+  } else {
+    dc3Left = dcRect.left + 240;
+    dc3Top = dcRect.top + 220 + scrollY;
+  }
+
+  deal.x = (dc3Left - heroLeft) / scale;
+  deal.y = (dc3Top - heroTop) / scale;
 }
 
 function buildScrollMaster() {
@@ -320,7 +327,7 @@ function buildScrollMaster() {
     { isDesktop: '(min-width: 769px)', isMobile: '(max-width: 768px)' },
     (context) => {
       const { isDesktop } = context.conditions;
-      if (!isDesktop || !diagonalCardEl || heroCards.length < 7 || dcCards.length < 1) {
+      if (!diagonalCardEl || heroCards.length < 7 || dcCards.length < 1) {
         return;
       }
 
@@ -457,6 +464,9 @@ export function teardownSectionsOneAndTwo() {
   teardownHeroIntro();
   teardownScrollMaster();
 }
+
+
+
 
 
 // Section 3
@@ -611,9 +621,9 @@ mm.add("(min-width: 769px)", () => {
     }
   });
   tl10.to(".image", {
-    top: "30vh",
-    width: "20vw",
-    height: "40vh",
+    top: "30%",
+    width: "20%",
+    height: "40%",
     borderRadius: "20px",
     ease: "power2.inOut"
   }, 0);
@@ -630,6 +640,8 @@ mm.add("(min-width: 769px)", () => {
     },
     0
   );
+
+
   //Section 11
   const tlMembership = gsap.timeline({
     scrollTrigger: {
@@ -710,7 +722,7 @@ async function initMatterPhysics() {
     left: 0,
     xPercent: -50,
     yPercent: -50,
-    opacity: 1,
+    opacity: 0,
     margin: 0,
     scale: () => gsap.utils.random(0.94, 1.06),
     rotation: () => gsap.utils.random(-12, 12)
@@ -731,6 +743,8 @@ async function initMatterPhysics() {
       const x = dropZoneX + gsap.utils.random(-dropZoneJitter, dropZoneJitter);
       const y = -100 - i * 70 - gsap.utils.random(0, 40);
 
+      gsap.set(circle, { opacity: 1 });
+
       const body = Bodies.circle(x, y, radius, {
         restitution: 0.2,
         friction: 0.15,
@@ -748,12 +762,18 @@ async function initMatterPhysics() {
       const ySet = gsap.quickSetter(circle, "y", "px");
       const rSet = gsap.quickSetter(circle, "rotation", "deg");
 
+      const img = circle.querySelector("img");
+      const logoSetter = circle.classList.contains("keep-upright")
+        ? gsap.quickSetter(img, "rotation", "deg")
+        : null;
+
       circleBodies.push({
         body,
         dom: circle,
         xSet,
         ySet,
         rSet,
+        logoSetter,
         landed: false
       });
       Composite.add(engine.world, body);
@@ -771,7 +791,13 @@ async function initMatterPhysics() {
       const b = obj.body;
       obj.xSet(b.position.x);
       obj.ySet(b.position.y);
-      obj.rSet(b.angle * 180 / Math.PI);
+
+      const rotation = b.angle * 180 / Math.PI;
+      obj.rSet(rotation);
+
+      if (obj.logoSetter) {
+        obj.logoSetter(-rotation);
+      }
 
       if (!obj.landed && b.speed > 3 && b.position.y > height * 0.6) {
         obj.landed = true;
@@ -992,8 +1018,10 @@ async function initParticleWave() {
   dotCtx.fill();
   const dotTexture = new THREE.CanvasTexture(dotCanvas);
 
+  const PARTICLE_SIZE = isDesktop ? 1.4 : 0.8;
+
   const material = new THREE.PointsMaterial({
-    size: 0.8,
+    size: PARTICLE_SIZE,
     vertexColors: true,
     map: dotTexture,
     transparent: true,
@@ -1173,3 +1201,5 @@ if (quoteForm) {
     }
   });
 }
+// Set current year in footer
+document.getElementById('currentYear').textContent = new Date().getFullYear();
