@@ -1202,4 +1202,56 @@ if (quoteForm) {
   });
 }
 // Set current year in footer
-document.getElementById('currentYear').textContent = new Date().getFullYear();
+const currentYearEl = document.getElementById('currentYear');
+if (currentYearEl) currentYearEl.textContent = new Date().getFullYear();
+
+// Contact Form Logic
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('contactName').value;
+    const email = document.getElementById('contactEmail').value;
+    const message = document.getElementById('contactMessage').value;
+    
+    const submitBtn = document.getElementById('contactSubmitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoader = submitBtn.querySelector('.btn-loader');
+    const successMsg = document.getElementById('contactSuccessMsg');
+
+    submitBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'inline-block';
+    successMsg.style.display = 'none';
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          Name: name,
+          name: name,
+          firstName: name,
+          email: email,
+          message: message,
+        }
+      );
+
+      successMsg.style.display = 'block';
+      contactForm.reset();
+
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 5000);
+
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      alert("Sorry, something went wrong. Please try again later.");
+    } finally {
+      submitBtn.disabled = false;
+      btnText.style.display = 'inline-block';
+      btnLoader.style.display = 'none';
+    }
+  });
+}
