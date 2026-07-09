@@ -1214,7 +1214,7 @@ if (contactForm) {
     const name = document.getElementById('contactName').value;
     const email = document.getElementById('contactEmail').value;
     const message = document.getElementById('contactMessage').value;
-    
+
     const submitBtn = document.getElementById('contactSubmitBtn');
     const btnText = submitBtn.querySelector('.btn-text');
     const btnLoader = submitBtn.querySelector('.btn-loader');

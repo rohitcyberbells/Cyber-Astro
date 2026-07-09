@@ -29,7 +29,6 @@
     --color-success: #10b981;
     --color-danger: #ef4444;
 
-    /* ---- Repeated component values ---- */
     --radius-pill: 30px;
     --radius-card: 20px;
     --radius-card-lg: 24px;
@@ -177,13 +176,30 @@ html.lenis body {
     left: 0;
     width: 100%;
     height: 100%;
+    transform-origin: bottom center;
+    will-change: transform;
+    z-index: 1;
+    transition: z-index 0s step-end;
+}
+
+.ph-card:hover {
+    z-index: 10;
+    transition: z-index 0s step-start;
+}
+
+.ph-card-inner {
+    width: 100%;
+    height: 100%;
     border-radius: 16px;
     background: var(--color-placeholder);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transform-origin: bottom center;
-    padding: 5px 5px 5px 5px;
-    will-change: transform;
+    padding: 5px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ph-card:hover .ph-card-inner {
+    transform: scale(1.50) translateY(-25px);
 }
 
 .ph-card img {
@@ -196,20 +212,30 @@ html.lenis body {
 .hero-para {
     font-size: 1rem;
     color: var(--color-ink-soft);
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     margin-top: 30px;
     font-weight: 500;
 }
 
 .hero-btn-wrapper {
     position: relative;
-    margin-top: 20px;
+    margin-top: 0;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 16px;
     z-index: 10;
+}
+
+.trust-line {
+    font-size: 0.9rem;
+    color: var(--color-ink-soft);
+    margin-top: 24px;
+    font-weight: 500;
+    text-align: center;
+    opacity: 0.8;
+    letter-spacing: 0.02em;
 }
 
 .hero-btn {
@@ -571,6 +597,14 @@ html.lenis body {
     color: var(--color-ink);
 }
 
+.gateway-para {
+    font-size: 1.05rem;
+    color: var(--color-ink-soft);
+    line-height: 1.5;
+    font-weight: 500;
+    margin-top: 15px;
+}
+
 .gateway-author {
     padding-bottom: 20px;
 }
@@ -715,27 +749,50 @@ html.lenis body {
     position: relative;
     width: 100%;
     overflow: hidden;
-    padding: 20px 0;
+    padding: 30px 0;
+    margin-top: 40px;
 }
 
 .marquee-track {
     display: flex;
-    gap: 70px;
     align-items: center;
     width: max-content;
-    animation: scroll-marquee 20s linear infinite;
+    animation: scroll-marquee 25s linear infinite;
 }
 
 .logo-item {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-border-dim);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-ink);
+    opacity: 0.22;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     display: flex;
     align-items: center;
-    gap: 8px;
     white-space: nowrap;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+        color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: default;
+}
+
+.logo-item:hover {
+    opacity: 0.85;
+    color: var(--color-danger);
+    transform: scale(1.06);
+}
+
+.logo-item::after {
+    content: "•";
+    margin: 0 45px;
+    color: var(--color-danger);
+    font-size: 1.5rem;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.logo-item:hover::after {
+    opacity: 1;
 }
 
 .fade-left,
@@ -764,7 +821,7 @@ html.lenis body {
     }
 
     100% {
-        transform: translateX(-50%);
+        transform: translateX(-33.3333%);
     }
 }
 
@@ -936,6 +993,20 @@ html.lenis body {
     color: var(--color-ink);
     margin-bottom: 20px;
     letter-spacing: -0.04em;
+}
+
+.wavy-card-desc {
+    font-size: 1.05rem;
+    color: var(--color-ink-soft);
+    line-height: 1.5;
+    font-weight: 500;
+    margin-top: 15px;
+}
+
+.author-bubble {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .wavy-cards-word {
@@ -1348,7 +1419,6 @@ html.lenis body {
     left: 50%;
     transform: translateX(-50%);
     width: 78.125%;
-    /* 1200 / 1536 */
     height: 100%;
     border-radius: var(--radius-card-lg);
     z-index: 10;
@@ -1421,6 +1491,7 @@ html.lenis body {
     width: 20%;
     height: 30%;
 }
+
 
 .shrink-c7 {
     left: 42%;
@@ -2241,6 +2312,11 @@ html.lenis body {
     }
 
     .logo-item {
+        font-size: 1.1rem;
+    }
+
+    .logo-item::after {
+        margin: 0 20px;
         font-size: 1rem;
     }
 
@@ -2903,14 +2979,30 @@ html.lenis body {
 
 @media (min-width: 1920px) {
     .hero {
-        padding-top: 180px;
+        padding-top: 100px;
     }
 
     .hero-para {
-        margin-top: 60px;
+        margin-top: 40px;
+        margin-bottom: 36px;
     }
 
     .hero-btn-wrapper {
-        margin-top: 80px;
+        margin-top: 0;
+    }
+
+    .trust-line {
+        margin-top: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .quote-modal-content {
+        padding: 30px 20px;
+    }
+
+    .quote-close-btn {
+        top: 15px;
+        right: 20px;
     }
 }
